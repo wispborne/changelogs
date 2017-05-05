@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<resources>
+    <!--~~~~~ For theming; DO NOT USE DIRECTLY -->
+    <!-- Light Theme -->
+    <color name="primary">#72B01D</color>
+    <color name="primary_dark">#58900A</color>
+    <color name="primary_light">#B1E569</color>
+    <color name="accent">#178D3F</color>
+    <color name="accent_light">#50000000</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="divider">@color/gray</color>
+    <color name="activity_background">@color/white</color>
+
+    <!-- Dark Theme -->
+    <color name="primary_text_darkTheme">#FAFAFA</color>
+    <color name="secondary_text_darkTheme">#bebebe</color>
+    <color name="activity_background_darkTheme">#263238</color>
+    <color name="hyperlink_darkTheme">#4FC3F7</color>
+
+    <!-- Black Theme -->
+    <color name="activity_background_blackTheme">#000</color>
+    <!--~~~~~ End DO NOT USE DIRECTLY -->
+
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="gray">#B6B6B6</color>
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent_white">#BBFFFFFF</color>
+    <color name="hyperlink">#0B0080</color>
+    <color name="opaque_gray">#9E9E9E</color>
+</resources>

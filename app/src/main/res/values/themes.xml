@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<resources>
+    <!-- Base application themes -->
+    <style name="BaseTheme_Light" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_darkTheme</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_darkTheme</item>
+        <item name="android:textColorLink">@color/hyperlink</item>
+        <item name="android:textColorLinkInverse">@color/hyperlink_darkTheme</item>
+        <item name="android:windowBackground">@color/activity_background</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:selectableItemBackground">@drawable/compat_item_background_light</item>
+
+        <!-- Below are common across themes -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!-- Set the Contextual Action Bar over the toolbar and transparent !-->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/transparent</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+
+    <style name="BaseTheme_Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        todo: this messes up the switch on preferences screen
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/primary_text_darkTheme</item>
+        <item name="android:textColorSecondary">@color/secondary_text_darkTheme</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text</item>
+        <item name="android:textColorLink">@color/hyperlink_darkTheme</item>
+        <item name="android:textColorLinkInverse">@color/hyperlink</item>
+        <item name="android:windowBackground">@color/activity_background_darkTheme</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:selectableItemBackground">@drawable/compat_item_background_dark</item>
+
+        <!-- Below are common across themes -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!-- Set the Contextual Action Bar over the toolbar and transparent !-->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/transparent</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+    <!-- End base application themes -->
+
+    <!-- Theme Variants -->
+    <style name="AppTheme_Black" parent="AppTheme_Dark">
+        <item name="android:windowBackground">@color/activity_background_blackTheme</item>
+        <item name="android:selectableItemBackground">@drawable/compat_item_background_black</item>
+    </style>
+    <!-- End theme variants -->
+
+
+    <!-- To be overridden in other values folders, e.g. v21 -->
+    <style name="AppTheme_Light" parent="BaseTheme_Light" />
+
+    <style name="AppTheme_Dark" parent="BaseTheme_Dark" />
+    <!-- End to be overridden in other values folders, e.g. v21 -->
+
+
+    <!-- Other styles -->
+    <style name="Dialog_Light" parent="AppTheme_Light" />
+
+    <style name="Dialog_Dark" parent="AppTheme_Dark" />
+
+    <style name="Toolbar_Light" parent="Theme.AppCompat.Light" />
+
+    <style name="Toolbar_Dark" parent="Theme.AppCompat" />
+
+    <style name="GreyAccent_Light" parent="AppTheme_Light">
+        <item name="colorAccent">@color/opaque_gray</item>
+        <item name="colorControlHighlight">@color/opaque_gray</item>
+    </style>
+
+    <style name="GreyAccent_Dark" parent="AppTheme_Dark">
+        <item name="colorAccent">@color/opaque_gray</item>
+        <item name="colorControlHighlight">@color/opaque_gray</item>
+    </style>
+
+    <style name="GreyAccent_Black" parent="AppTheme_Black">
+        <item name="colorAccent">@color/opaque_gray</item>
+        <item name="colorControlHighlight">@color/opaque_gray</item>
+    </style>
+
+</resources>

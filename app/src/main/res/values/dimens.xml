@@ -1,0 +1,39 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<resources>
+    <dimen name="spacingHuge">32dp</dimen>
+    <dimen name="spacingLarge">24dp</dimen>
+    <dimen name="spacingMedium">16dp</dimen>
+    <dimen name="spacingSmall">8dp</dimen>
+    <dimen name="spacingSmall_half">4dp</dimen>
+    <dimen name="spacingTiny">4dp</dimen>
+    <dimen name="spacingMicro">2dp</dimen>
+
+    <dimen name="textTitle">20sp</dimen>
+    <dimen name="textSubtitle">16sp</dimen>
+    <dimen name="textBody">14sp</dimen>
+    <dimen name="textHint">12sp</dimen>
+
+    <!-- From Changelogs v1 -->
+    <dimen name="card_appInfo_height">44dp</dimen>
+    <dimen name="divider_height">1px</dimen>
+    <dimen name="about_logo">72dp</dimen>
+    <dimen name="details_logo">64dp</dimen>
+    <dimen name="activityPadding">@dimen/spacingMedium</dimen>
+    <dimen name="item_appItem_textDrawable_size">18dp</dimen>
+    <dimen name="appInfo_icon_size">48dp</dimen>
+
+    <dimen name="text_subhead">16sp</dimen>
+    <dimen name="text_body_small">12sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_headline">24dp</dimen>
+    <dimen name="text_mini">10sp</dimen>
+</resources>

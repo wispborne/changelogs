@@ -1,0 +1,49 @@
+/*
+ * Copyright (c) 2017.
+ * Distributed under the GNU GPLv3 by David Whitman.
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ *
+ * This source code is made available to help others learn. Please don't clone my app.
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':persistence')
+    compile project(':playstoreapi')
+    compile project(':utils')
+
+    compile libraries.kotlin
+    compile libraries.rxrelay
+    compile libraries.rxjava
+    compile libraries.dagger
+    kapt libraries.daggerCompiler
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile libraries.junit
+}

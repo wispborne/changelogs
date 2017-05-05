@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<resources>
+
+    <style name="ToolBar" parent="Theme.AppCompat.Light">
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
+    </style>
+
+    <!-- Used to get a reference to the overflow button so that it can be colored -->
+    <style name="Widget.ActionButton.Overflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:contentDescription">@string/abc_action_menu_overflow_description</item>
+    </style>
+
+</resources>

@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+/*
+ * Copyright (c) 2017.
+ * Distributed under the GNU GPLv3 by David Whitman.
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ *
+ * This source code is made available to help others learn. Please don't clone my app.
+ */
+
+//apply plugin: 'org.junit.platform.gradle.plugin'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+//        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3'
+    }
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.code
+        versionName versions.name
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':utils')
+
+    compile libraries.kotlin
+
+    compile libraries.rxjava
+    compile libraries.timber
+    compile libraries.protobuf
+
+    compile libraries.okhttp
+    compile libraries.rxandroid
+
+    testCompile libraries.junit
+    testCompile libraries.mockitoCore
+    testCompile libraries.mockitoKotlin
+    testCompile libraries.spekApi
+    testCompile libraries.spekJunitPlatformEngine
+    testCompile libraries.junitPlatformRunner
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
+repositories {
+    mavenCentral()
+}
+
+//junitPlatform {
+//    filters {
+//        engines {
+//            include 'spek'
+//        }
+//    }
+//}

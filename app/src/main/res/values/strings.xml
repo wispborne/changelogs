@@ -1,0 +1,112 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<resources>
+    <string name="app_name">Changelogs</string>
+    <string name="intro_explanation"><![CDATA[To provide the most up-to-date information possible, this app contacts the Play Store directly.
+        <br/><br/>To make this happen, <b>an authorization token is required</b>; a signature unique to you.
+    <br/><br/>When you\'re ready, we\'ll ask for your permission.
+        <br/><br/><br/><i>Neither this token nor any other personally identifiable information (such as your email address)
+    is ever sent anywhere but to Google.</i>]]></string>
+    <string name="intro_quit">Exit</string>
+    <string name="intro_ok">Ok</string>
+
+    <!-- From changelogs 1 -->
+    <string name="error_noAccounts">No Google Accounts found on device. A Google Account is required to contact the Play Store
+    to get information on app updates.</string>
+    <string name="error_noMailClientInstalled">No email client found!</string>
+    <string name="item_appInfo_lastUpdated">Last Updated:</string>
+    <string name="item_appInfo_neverUpdated">Never</string>
+    <string name="menu_refresh_smart">Smart Refresh</string>
+    <string name="contentDesc_appIcon">App icon</string>
+    <string name="menu_sort">Sort</string>
+    <string name="menu_sortByLastUpdated">Last Updated</string>
+    <string name="menu_sortByTitle">Title</string>
+    <string name="menu_sortByHasUpdate">Has Update</string>
+    <string name="menu_sortBySize">Size</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_query">Search</string>
+    <string name="search_query_hint">App name</string>
+    <string name="menu_refresh_full">Refresh</string>
+    <string name="about_title">About</string>
+    <string name="about_version" formatted="false">version %s (build %d)</string>
+    <string name="about_code">Third Party</string>
+    <string name="about_assets">Assets</string>
+    <string name="about_contributors">Contributors</string>
+    <string name="notification_scanning_text">Looking for app updates</string>
+    <string name="details_version" formatted="false">v%s (build %d)</string>
+    <string name="details_changelog_title" formatted="false">Changelog for v%s</string>
+    <string name="details_contentDesc_logo">App Logo</string>
+    <string name="content_download_size">Download Size</string>
+    <string name="details_ratings" formatted="false">%s/%s from %s reviews</string>
+    <string name="details_changelog_title_unfound">No Changelog Found</string>
+    <string name="details_changelog_text">There is a bug with Google\'s data where some
+        apps are missing and, unfortunately, there is no way for Changelogs to fix this because the
+        information comes directly from Google.
+    \n\nAlternatively, the app may not exist on the Play Store.</string>
+    <string name="permissions_explanation">We need to use a Google Account to get app information
+    from the Play Store. That\'s all we do with it; we don\'t track it, sell it, store it remotely, or
+    any of that nonsense.</string>
+    <string name="googleAccount_rationale">On the next screen, we\'re going to ask for permission to use your Google Account.
+        This is needed to download app information directly from Google. \n\nWithout this permission, only offline information can be shown.</string>
+    <string name="next">Continue</string>
+    <string name="quit">Quit</string>
+    <string name="play_services_fatal_message">Google Play Services failed to install or update.
+        This app is useless without it, so we\'re just going to get out of your way. Goodbye :(</string>
+    <string name="goodbye">Goodbye</string>
+    <string name="cantReachHostErrorToast">Unable to reach android.clients.google.com</string>
+    <string name="somethingWentWrong">Something went wrong…</string>
+    <string name="ok">OK</string>
+    <string name="creatingAuthTokenMessage">Getting authorization token…</string>
+    <string name="authTokenRequiredMessage">This permission is required to be able to access the Google API.</string>
+    <string name="noInternetMessage">No Internet</string>
+    <string name="couldntGetAuthTokenMessage">Couldn\'t get auth token.</string>
+    <string name="desc_badgeUpdate">Update Available</string>
+    <string name="details_updateAvailable">Update Available</string>
+    <string name="throttlingErrorToast">Google is limiting our API requests. Please try again later.</string>
+    <string name="prefTitle_scanning">Auto-refresh when apps change</string>
+    <string name="prefSummary_scanning_entry_always">Always</string>
+    <string name="prefSummary_scanning_entry_wifi">Only on Wi-Fi</string>
+    <string name="prefSummary_scanning_entry_never">Never</string>
+    <string-array name="prefSummary_scanning_entries">
+        <item>@string/prefSummary_scanning_entry_always</item>
+        <item>@string/prefSummary_scanning_entry_wifi</item>
+        <item>@string/prefSummary_scanning_entry_never</item>
+    </string-array>
+    <string name="prefTitle_theme">Theme</string>
+    <string name="prefSummary_theme_entry_light">Light</string>
+    <string name="prefSummary_theme_entry_dark">Dark</string>
+    <string name="prefSummary_theme_entry_black">Black</string>
+    <string-array name="prefSummary_theme_entries">
+        <item>@string/prefSummary_theme_entry_light</item>
+        <item>@string/prefSummary_theme_entry_dark</item>
+        <item>@string/prefSummary_theme_entry_black</item>
+    </string-array>
+    <string name="pref_anonLogging_title">Allow anonymous logging</string>
+    <string name="pref_anonLogging_summary">This helps with fixing crashes</string>
+    <string name="pref_showSystemApps_title">Show system apps</string>
+    <string name="settings_title">Settings</string>
+    <string name="menu_feedback">Send feedback</string>
+    <string name="desc_play_store_button">Open in Play Store</string>
+    <string name="desc_launchApp_button">Launch app</string>
+    <string name="desc_info_button">App Info</string>
+    <string name="desc_uninstallApp_button">Uninstall app</string>
+    <string name="pref_language_title">Language</string>
+    <string name="pref_language_default">System default</string>
+    <string name="text_about_author">by David Whitman</string>
+    <string name="text_about_contrib_cypressious">Developer of Changelog Droid</string>
+    <string name="text_about_googleplus">Give feedback on </string>
+    <string name="text_about_trello">Track development on </string>
+    <string name="details_local">Local</string>
+    <string name="details_online">Online</string>
+    <string name="menu_details_clearData">Clear Saved Data</string>
+    <string name="menu_details_intensiveScan">Intensive Scan</string>
+    <string name="text_about_kotlin">Proudly written in Kotlin</string>
+
+    <string name="appInfo_item_revisions"># changelogs: %s</string>
+</resources>

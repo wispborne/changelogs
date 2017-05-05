@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2017.
+ * Distributed under the GNU GPLv3 by David Whitman.
+ * https://www.gnu.org/licenses/gpl-3.0.en.html
+ *
+ * This source code is made available to help others learn. Please don't clone my app.
+ */
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: 'dependencies.gradle'
+
+buildscript {
+    apply from: 'dependencies.gradle'
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath gradlePlugins.gradle
+        classpath gradlePlugins.kotlin
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url "http://dl.bintray.com/jetbrains/spek" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

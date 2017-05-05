@@ -1,0 +1,25 @@
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# IntelliJ
+.idea/libraries
+.idea/misc.xml
+.idea/workspace.xml
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/compiler.xml
+.idea/kotlinc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/encodings.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties

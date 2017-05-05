@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017.
+  ~ Distributed under the GNU GPLv3 by David Whitman.
+  ~ https://www.gnu.org/licenses/gpl-3.0.en.html
+  ~
+  ~ This source code is made available to help others learn. Please don't clone my app.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- http://stackoverflow.com/questions/8041537/how-to-reference-style-attributes-from-a-drawable -->
+    <item android:drawable="@color/accent_light" android:state_pressed="true" />
+    <item android:drawable="@color/activity_background_darkTheme" />
+</selector>

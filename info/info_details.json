@@ -1,0 +1,189 @@
+docid: "com.thunderclouddev.changelogs"
+backendDocid: "com.thunderclouddev.changelogs"
+docType: 1
+backendId: 3
+title: "Changelogs"
+creator: "Thundercloud Development LLC"
+descriptionHtml: "View the latest changelogs for your installed applications in a list instead of clicking, app by app, through the Play Store. <br><br><br>KNOWN BUGS AND LIMITATIONS:<br>- Some applications are missing data. This is controlled by Google&#39;s closed-source API and is totally outside of my control.<br>- Uninstalled apps aren&#39;t removed from the list until the app is restarted.<br><br>Dev tracker &amp; voting: https://trello.com/b/fiKOZxRD/changelogs-for-android<br>Feedback: https://plus.google.com/communities/115587847693422752094<br><br>Note: This was a personal project used to explore new technologies and ideas. The best I can say is that it will probably work for most apps."
+offer {
+  micros: 0
+  currencyCode: "USD"
+  formattedAmount: "Free"
+  checkoutFlowRequired: false
+  offerType: 1
+  26: "Buy"
+}
+availability {
+  restriction: 1
+  availableIfOwned: true
+}
+image {
+  imageType: 1
+  Dimension {
+    width: 1080
+    height: 1920
+  }
+  imageUrl: "https://lh3.googleusercontent.com/nwpzpFtb0xcyTbwNNMIZckvGjWBqP5JEDmhfdDryhBdw1jy9E4j-ofMTBvn1ocqWEr8"
+  positionInSequence: 0
+  supportsFifeUrlOptions: true
+  21: 1
+}
+image {
+  imageType: 1
+  Dimension {
+    width: 1080
+    height: 1920
+  }
+  imageUrl: "https://lh3.googleusercontent.com/bDDWmv0ofxicFe_Kj6YUO73HWx0_d_Yv-YimT7z-ltflsxrklxMbdmT_D2MCFoG1pJlC"
+  positionInSequence: 1
+  supportsFifeUrlOptions: true
+  21: 1
+}
+image {
+  imageType: 1
+  Dimension {
+    width: 1080
+    height: 1920
+  }
+  imageUrl: "https://lh3.googleusercontent.com/ka2evZNmHfRx-ExGsCbiskHSoHfjTzcipNpH1MwxrFjxaCZAfDZjwvPneFTeoAHJ-Pv4"
+  positionInSequence: 2
+  supportsFifeUrlOptions: true
+  21: 1
+}
+image {
+  imageType: 4
+  Dimension {
+    width: 512
+    height: 512
+  }
+  imageUrl: "https://lh3.googleusercontent.com/EcIdKrsgV4ailXutm85yya3v5GJNM27twbrBubNc9skAMFqIoAjEut9eEn8T4v9hApY"
+  supportsFifeUrlOptions: true
+}
+image {
+  imageType: 2
+  Dimension {
+    width: 1024
+    height: 500
+  }
+  imageUrl: "https://lh3.googleusercontent.com/iBu4zb1ssdeqHjIHcrljjSN95c2rcZeEFmUVzd-v9iwUY8oEVf1B7giRQb_-9KV0K1g"
+  supportsFifeUrlOptions: true
+}
+details {
+  appDetails {
+    developerName: "Thundercloud Development LLC"
+    majorVersionNumber: 1
+    versionCode: 16
+    versionString: "1.1.2-release"
+    title: ""
+    appCategory: "TOOLS"
+    installationSize: 7578482
+    permission: "android.permission.ACCESS_NETWORK_STATE"
+    permission: "android.permission.INTERNET"
+    permission: "android.permission.USE_CREDENTIALS"
+    permission: "com.google.android.providers.gsf.permission.READ_GSERVICES"
+    developerEmail: "thunderclouddev@gmail.com"
+    developerWebsite: "https://plus.google.com/communities/115587847693422752094"
+    numDownloads: "10,000+ downloads"
+    packageName: "com.thunderclouddev.changelogs"
+    recentChangesHtml: "v1.1.2<br>- Hotfix for Android N.<br>- Still working on v1.2, will have dark theme, more found apps, blacklist, localization, system apps, and more. Join the beta to preview it.<br><br>v1.1.1<br>- Hotfix to find data for more apps<br>- Much more to come in 1.2"
+    uploadDate: "May 21, 2016"
+    file {
+      fileType: 0
+      versionCode: 16
+      size: 7578482
+      5: 6692313
+    }
+    appType: "APPLICATION"
+    dependencies {
+      unknown1: 0
+      unknown2: 7578482
+      dependency {
+        packageName: "com.google.android.gms"
+        version: 8487000
+        unknown4: 1
+      }
+      unknown3: 23
+    }
+    21: 1
+    22: "\n\0332tLzA-FByONNrtilNlAxK7MS_RA"
+    28: 0
+    32: 23
+    35: "\b\000\020\000\030\000*\031thunderclouddev@gmail.com"
+  }
+}
+aggregateRating {
+  type: 2
+  starRating: 4.2095375
+  ratingsCount: 692
+  oneStarRatings: 59
+  twoStarRatings: 17
+  threeStarRatings: 50
+  fourStarRatings: 160
+  fiveStarRatings: 406
+  commentCount: 169
+}
+relatedLinks {
+  youMightAlsoLike {
+    label: "You might also like"
+    url1: "cluster?adctx=CiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAMQAxoTCKnD8oHcpNMCFQ-Z3wodDKMCOg&ecp=0gI_CiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAMSFQoTCKnD8oHcpNMCFQ-Z3wodDKMCOhgB&ero=OAE%3D&ds=1&n=21"
+    url2: "browseCluster?ecp=0gImCiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAM%3D&ero=OAE%3D&n=21"
+  }
+  rated {
+    label: "PEGI 3"
+    image {
+      Dimension {
+        width: 512
+        height: 512
+      }
+      imageUrl: "https://lh3.ggpht.com/lspH_P0jzSrMea8ydcup14l1fGGjwiklKsAD-OFcPr5GCb8DlPAJoJ-rzSRs8G1uNMoI-WpNg7dusnOl"
+      supportsFifeUrlOptions: true
+    }
+    learnMoreHtmlLink: "<a href=\"https://support.google.com/googleplay?p=appgame_ratings\">Learn More</a>"
+    5: "PEGI 3"
+  }
+  relatedLinks {
+    label: "More by Thundercloud Development LLC"
+    url1: "cluster?ecp=igNDChkKEzU0NjA0OTA4Nzc0NzcyNDMwMTcQCBgDEiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAMYAQ%3D%3D&ero=OAE%3D&ds=1"
+    url2: "browseCluster?ecp=igNDChkKEzU0NjA0OTA4Nzc0NzcyNDMwMTcQCBgDEiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAMYAQ%3D%3D&ero=OAE%3D"
+  }
+  relatedLinks {
+    label: "Similar apps"
+    url1: "cluster?ecp=qgEmCiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAM%3D&ero=OAE%3D&ds=1&n=21"
+    url2: "browseCluster?ecp=qgEmCiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAM%3D&ero=OAE%3D&n=21"
+  }
+  relatedLinks {
+    label: "You might also like"
+    url1: "cluster?ecp=ggImCiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAM%3D&ero=OAE%3D&ds=1&n=21"
+    url2: "browseCluster?ecp=ggImCiQKHmNvbS50aHVuZGVyY2xvdWRkZXYuY2hhbmdlbG9ncxABGAM%3D&ero=OAE%3D&n=21"
+  }
+  relatedLinks {
+    url1: "cluster?ecp=ygICEAg%3D&ero=OAE%3D&ds=1"
+    url2: "browseCluster?ecp=ygICEAg%3D&ero=OAE%3D"
+  }
+  categoryInfo {
+    appType: "APPLICATION"
+    appCategory: "TOOLS"
+  }
+}
+detailsUrl: "details?doc=com.thunderclouddev.changelogs"
+shareUrl: "https://play.google.com/store/apps/details?id=com.thunderclouddev.changelogs"
+reviewsUrl: "rev?doc=com.thunderclouddev.changelogs&n=20&o=0"
+detailsReusable: true
+unknown25 {
+  item {
+    label: "Offered by"
+    container {
+      value: "Thundercloud Development LLC"
+    }
+  }
+  item {
+    label: "Developer e-mail"
+    container {
+      value: "thunderclouddev@gmail.com"
+    }
+  }
+}
+24: "\b\002\032=\n&\022$\n\036com.thunderclouddev.changelogs\020\001\030\0032\023\b\251\303\362\201\334\244\323\002\025\017\231\337\n\035\f\243\002:"
+26: 0
+27: "View the latest changelogs for your installed applications."
+34: "reviewQuestions?doc=com.thunderclouddev.changelogs"
