@@ -11,8 +11,8 @@ package com.thunderclouddev.playstoreapi
 import android.content.Context
 import android.content.SharedPreferences
 import com.nhaarman.mockito_kotlin.mock
-import com.thunderclouddev.playstoreapi.proto.AndroidCheckinRequest
 import com.thunderclouddev.utils.empty
+import fdfeProtos.AndroidCheckinRequest
 import io.reactivex.Single
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context

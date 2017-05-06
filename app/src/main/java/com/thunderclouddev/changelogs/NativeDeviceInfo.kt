@@ -12,14 +12,11 @@ package com.thunderclouddev.changelogs
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
-import com.thunderclouddev.playstoreapi.proto.AndroidBuildProto
-import com.thunderclouddev.playstoreapi.proto.AndroidCheckinProto
-import com.thunderclouddev.playstoreapi.proto.AndroidCheckinRequest
-import com.thunderclouddev.playstoreapi.proto.DeviceConfigurationProto
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.Locale
-import java.util.TimeZone
+import fdfeProtos.AndroidBuildProto
+import fdfeProtos.AndroidCheckinProto
+import fdfeProtos.AndroidCheckinRequest
+import fdfeProtos.DeviceConfigurationProto
+import java.util.*
 
 class NativeDeviceInfo(private val context: Context, private val localeString: String) {
     fun generateAndroidCheckinRequest(): AndroidCheckinRequest {

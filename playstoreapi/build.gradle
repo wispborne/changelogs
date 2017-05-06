@@ -44,15 +44,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/ChangelogsProtos.jar')
     compile project(':utils')
 
     compile libraries.kotlin
-
     compile libraries.rxjava
     compile libraries.timber
-    compile libraries.protobuf
-
     compile libraries.okhttp
     compile libraries.rxandroid
 

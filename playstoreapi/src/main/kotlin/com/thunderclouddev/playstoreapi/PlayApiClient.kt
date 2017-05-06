@@ -11,10 +11,10 @@ package com.thunderclouddev.playstoreapi
 import com.thunderclouddev.playstoreapi.model.ApiAppInfo
 import com.thunderclouddev.playstoreapi.model.Links
 import com.thunderclouddev.playstoreapi.model.Offer
-import com.thunderclouddev.playstoreapi.proto.*
 import com.thunderclouddev.utils.asSingletonList
 import com.thunderclouddev.utils.getOrNullIfBlank
 import com.thunderclouddev.utils.isNotNullOrBlank
+import fdfeProtos.UploadDeviceConfigRequest
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -115,7 +115,7 @@ abstract class PlayRequest<T> : com.thunderclouddev.playstoreapi.Request<PlayReq
         override fun execute(apiClient: RxOkHttpClient, defaultHeaders: Headers): Single<List<ApiAppInfo>> =
                 apiClient.rxecute(Request.Builder()
                         .post(RequestBody.create(PlayApiConstants.PROTOBUF_MEDIA_TYPE,
-                                com.thunderclouddev.playstoreapi.proto.BulkDetailsRequest.newBuilder()
+                                fdfeProtos.BulkDetailsRequest.newBuilder()
                                         .addAllDocid(packageNames)
                                         .build().toByteArray()))
                         .headers(defaultHeaders)
@@ -123,7 +123,7 @@ abstract class PlayRequest<T> : com.thunderclouddev.playstoreapi.Request<PlayReq
                         .build())
                         .doOnSubscribe { Timber.v("FdfeBulk fetching ${packageNames.joinToString()}") }
                         .map {
-                            ResponseWrapper.parseFrom(it.body().bytes()).payload.bulkDetailsResponse.entryList
+                            fdfeProtos.ResponseWrapper.parseFrom(it.body().bytes()).payload.bulkDetailsResponse.entryList
                                     .map { entry -> entry.doc }
                                     .map { mapDocToAppInfo(it) }
                                     .filterIndexed { index, appInfo ->
@@ -144,13 +144,13 @@ abstract class PlayRequest<T> : com.thunderclouddev.playstoreapi.Request<PlayReq
                         .url("${PlayApiConstants.DETAILS_URL}?doc=$packageName")
                         .build())
                         .doOnSubscribe { Timber.v("FdfeDetails fetching $packageName") }
-                        .map { ResponseWrapper.parseFrom(it.body().bytes()).payload.detailsResponse }
+                        .map { fdfeProtos.ResponseWrapper.parseFrom(it.body().bytes()).payload.detailsResponse }
                         .map { mapDocToAppInfo(it.docV2) }
     }
 
     internal fun decompressGzippedBytes(bytes: ByteArray) = GZIPInputStream(ByteArrayInputStream(bytes)).readBytes()
 
-    internal fun mapDocToAppInfo(doc: DocV2): ApiAppInfo {
+    internal fun mapDocToAppInfo(doc: fdfeProtos.DocV2): ApiAppInfo {
         val links = mutableMapOf(Links.REL.SELF to doc.detailsUrl.asSingletonList())
 
         if (doc.imageList.any { it.imageType == IMAGE_TYPE_ID_FULL }) {

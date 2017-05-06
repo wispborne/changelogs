@@ -8,8 +8,7 @@
 
 package com.thunderclouddev.playstoreapi
 
-import com.thunderclouddev.playstoreapi.proto.AndroidCheckinRequest
-import com.thunderclouddev.playstoreapi.proto.DeviceConfigurationProto
+import fdfeProtos.AndroidCheckinRequest
 
 /**
  * @author David Whitman on 27 Mar, 2017.
