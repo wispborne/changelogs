@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'jacoco-android'
 /*
  * Copyright (c) 2017.
  * Distributed under the GNU GPLv3 by David Whitman.

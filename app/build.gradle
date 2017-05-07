@@ -8,13 +8,11 @@
 
 buildscript {
     repositories {
-        jcenter()
         maven { url "http://maven.fabric.io/public" }
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.22.1'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.1'
     }
 }
 
@@ -65,6 +63,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             minifyEnabled false
+            testCoverageEnabled true
             signingConfig signingConfigs.debug
             buildConfigField BOOLEAN, CRASHLYTICS, FALSE
             buildConfigField BOOLEAN, TRACE, FALSE
@@ -72,6 +71,7 @@ android {
         ci {
             minifyEnabled true
             shrinkResources true
+            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             buildConfigField BOOLEAN, TRACE, FALSE
@@ -171,4 +171,10 @@ afterEvaluate {
     android.applicationVariants.all { variant ->
         variant.javaCompiler.dependsOn(createMissingFabricFile)
     }
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
 }

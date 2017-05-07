@@ -46,8 +46,6 @@ internal class PlayApiClient(
     override fun <T> rxecute(request: com.thunderclouddev.playstoreapi.Request<PlayRequest<*>, T>): Single<T> =
             uploadDeviceConfigIfRequired()
                     .andThen((request as PlayRequest).execute(rxHttpClient, Headers.of(getDefaultHeaders())))
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
 
     private fun uploadDeviceConfigToGoogle(): Completable =
             rxHttpClient.rxecute(Request.Builder()

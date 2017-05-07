@@ -14,6 +14,8 @@ import com.thunderclouddev.utils.isNotNullOrBlank
 import com.thunderclouddev.utils.simpleClassName
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import timber.log.Timber
 import java.util.*
@@ -82,6 +84,8 @@ internal abstract class ApiClientWrapper<out C : ApiClient<R>, R : Request<R, *>
         return if (localApiClient != null) {
             return localApiClient.rxecute(request)
                     .map { it as T }
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
 //                    .doOnSuccess { Timber.v("Succeeded: ${request.simpleClassName}: $it") }
 //                    .doOnError { Timber.w("Error: ${request.simpleClassName}: ${it.message}") }
         } else {
@@ -103,9 +107,12 @@ internal abstract class ApiClientWrapper<out C : ApiClient<R>, R : Request<R, *>
 
                     pendingRequests += object : RetryableRequest {
                         override fun retry() {
-                            apiClient?.rxecute(request)?.subscribe(
-                                    { result -> subscriber.onSuccess(result as T) },
-                                    { error -> subscriber.onError(error) })
+                            apiClient?.rxecute(request)
+                                    ?.subscribeOn(Schedulers.newThread())
+                                    ?.observeOn(AndroidSchedulers.mainThread())
+                                    ?.subscribe(
+                                            { result -> subscriber.onSuccess(result as T) },
+                                            { error -> subscriber.onError(error) })
                         }
                     }
 
