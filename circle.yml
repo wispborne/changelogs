@@ -1,12 +1,14 @@
 machine:
   environment:
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3g -XX:+HeapDumpOnOutOfMemoryError"'
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+
+  java:
+    version: oraclejdk8
 
 dependencies:
   pre:
     - cp -r "circle-ci/licenses/" "/usr/local/android-sdk-linux/"
-  cache_directories:
-    - ~/.android
 
 test:
   override:
