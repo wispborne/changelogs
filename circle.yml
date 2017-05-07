@@ -21,7 +21,7 @@ test:
     - case $CIRCLE_NODE_INDEX in 1) ./gradlew testDebugUnitTest ;; 0) ./gradlew assemblePureDebug ;; esac:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 1) cp -r ./**/build/{test-results/test*/*,reports/jacoco/*} $CIRCLE_TEST_REPORTS ;; 0)cp -r app/build/outputs $CIRCLE_ARTIFACTS ;; esac:
+    - case $CIRCLE_NODE_INDEX in 1) cp -r --parents ./**/build/{test-results/test*/**,reports/jacoco/**} $CIRCLE_TEST_REPORTS -v ;; 0)cp -r app/build/outputs $CIRCLE_ARTIFACTS -v ;; esac:
         parallel: true
 
   post:
