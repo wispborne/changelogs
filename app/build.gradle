@@ -75,6 +75,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             buildConfigField BOOLEAN, TRACE, FALSE
+            dexOptions.preDexLibraries = false
         }
         alpha {
             minifyEnabled true
