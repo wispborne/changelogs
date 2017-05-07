@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/davidwhitman/changelogs/tree/master.svg?style=shield)](https://circleci.com/gh/davidwhitman/deep-link-launcher/tree/master)
-[![codecov](https://codecov.io/gh/davidwhitman/changelogs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidwhitman/deep-link-launcher)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=590f293f598da90001a1d73f&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/590f293f598da90001a1d73f/build/latest?branch=master)
+[![codecov](https://codecov.io/gh/davidwhitman/changelogs/branch/master/graph/badge.svg)](https://codecov.io/gh/davidwhitman/changelogs)
 
 # Changelogs
 
