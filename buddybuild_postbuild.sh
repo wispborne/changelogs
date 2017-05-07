@@ -6,4 +6,4 @@ cp -r --parents $BUDDYBUILD_WORKSPACE/**/build/reports/jacoco/* .
 
 curl -s https://codecov.io/bash > .codecov
 chmod +x .codecov
-./.codecov
+./.codecov -t $CODECOV_TOKEN
