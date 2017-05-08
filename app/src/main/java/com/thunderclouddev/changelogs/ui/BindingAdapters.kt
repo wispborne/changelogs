@@ -24,17 +24,16 @@ import java.util.*
 /**
  * Sets the given [Bitmap] as the [Drawable] of the input [ImageView]
  */
-@BindingAdapter("android:src")
+@BindingAdapter("src")
 fun setImageBitmap(imageView: ImageView, bitmap: Bitmap?) {
     imageView.setImageBitmap(bitmap)
 }
-
 
 /**
  * Sets the given [String] as the [TextView]s text, using html formatting
  */
 @SuppressLint("NewApi")
-@BindingAdapter("android:htmlText")
+@BindingAdapter("htmlText")
 fun setHtmlText(textView: TextView, string: String) {
     textView.text =
             if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.N)
@@ -46,14 +45,17 @@ fun setHtmlText(textView: TextView, string: String) {
 /**
  * Accepts a uri of the format `appIcon://com.package.name`
  */
-@BindingAdapter("bind:appIcon")
+@BindingAdapter("appIcon")
 fun setAppIconDrawable(imageView: ImageView, packageNameUri: String) {
     BaseApp.appInjector.getImageLoader()
             .load(packageNameUri)
             .into(imageView)
 }
 
-@BindingAdapter("bind:shortDateText")
+/**
+ * Formats a date using [DateFormat.getMediumDateFormat].
+ */
+@BindingAdapter("shortDateText")
 fun setShortDateText(textView: TextView, date: Date?) {
     textView.text = if (date == null)
         String.empty

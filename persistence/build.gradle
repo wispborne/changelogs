@@ -47,6 +47,12 @@ dependencies {
     compile libraries.timber
 
     testCompile libraries.junit
+    testCompile libraries.mockitoCore
+    testCompile libraries.mockitoKotlin
+    testCompile libraries.spekApi
+    testCompile libraries.spekJunitPlatformEngine
+    testCompile libraries.junitPlatformRunner
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

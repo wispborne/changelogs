@@ -11,6 +11,7 @@ package com.thunderclouddev.playstoreapi
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
+import com.thunderclouddev.utils.anyKt
 import fdfeProtos.AndroidCheckinRequest
 import fdfeProtos.BulkDetailsResponse
 import fdfeProtos.UploadDeviceConfigResponse
@@ -40,26 +41,18 @@ object PlayApiClientTest : Spek({
         val uploadRequired = false
 
         var httpClient: RxOkHttpClient = mock()
-        var locale: Locale = mock()
-
+        var locale: Locale
         val deviceInfo: DeviceInfo = DeviceInfo(
                 AndroidCheckinRequest.getDefaultInstance(),
                 "agent smith string",
                 21
         )
 
-        var playApiClient = PlayApiClient(
-                httpClient,
-                authToken,
-                gsfId,
-                deviceInfo,
-                locale,
-                uploadRequired
-        )
+        var playApiClient: PlayApiClient = mock()
 
         beforeEachTest {
-            httpClient = mock<RxOkHttpClient>()
-            locale = mock<Locale>()
+            httpClient = mock()
+            locale = mock()
 
             playApiClient = PlayApiClient(
                     httpClient,

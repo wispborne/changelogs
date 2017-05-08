@@ -24,4 +24,8 @@ data class AppInfosByPackage(val packageName: String, val appInfos: List<AppInfo
     override fun hashCode(): Int {
         return Objects.hash(packageName, Arrays.hashCode(appInfos.toTypedArray()))
     }
+
+    override fun toString(): String {
+        return "$packageName versions: {${appInfos.joinToString { it.versionCode.toString() }}}"
+    }
 }

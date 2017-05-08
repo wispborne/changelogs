@@ -8,7 +8,6 @@
 
 package com.thunderclouddev.changelogs.ui.home
 
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -28,14 +27,14 @@ import com.thunderclouddev.dataprovider.AppInfosByPackage
  * Created by david on 4/2/17.
  */
 class AppInfoRecycler(private val recyclerView: RecyclerView, installedPackages: InstalledPackages) {
-    val adapter = Adapter(recyclerView.context, installedPackages)
+    val adapter = Adapter()
 
     init {
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
         recyclerView.adapter = adapter
     }
 
-    class Adapter(context: Context, private val installedPackages: InstalledPackages) : SortedListAdapter<AppInfoViewModel>(
+    class Adapter : SortedListAdapter<AppInfoViewModel>(
             AppInfoViewModel::class.java,
             Comparators.get()) {
         override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup, viewType: Int): ViewHolder<out AppInfoViewModel> {

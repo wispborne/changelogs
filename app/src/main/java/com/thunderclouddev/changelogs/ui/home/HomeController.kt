@@ -14,29 +14,86 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
+import com.jakewharton.rxrelay2.PublishRelay
 import com.thunderclouddev.changelogs.BaseApp
 import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.changelogs.R
+import com.thunderclouddev.changelogs.ui.Progress
+import com.thunderclouddev.changelogs.ui.StateRenderer
+import com.thunderclouddev.dataprovider.AppInfosByPackage
 import com.thunderclouddev.dataprovider.PlayClient
-import com.thunderclouddev.utils.plusAssign
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
+ * The home screen. Displays a list of apps and their changelogs. Clicking on an app will go to the Details screen.
+ * Sort, filter, and more are supported (well, they will be).
+ *
  * @author David Whitman on 28 Mar, 2017.
  */
-class HomeController : Controller() {
+class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Actions, HomeUi.Intentions, StateRenderer<HomeUi.State> {
+
+    override var state: HomeUi.State = HomeUi.State.EMPTY
+
+    lateinit var renderer: HomeRenderer
+    lateinit var presenter: HomePresenter
+
+    override fun render(state: HomeUi.State) {
+        this.state = state
+        renderer.render(state)
+    }
+
+
+    var scanForUpdatesRequest: PublishRelay<Unit> = PublishRelay.create()
+    var loadCachedItems: PublishRelay<Unit> = PublishRelay.create()
+
+    override fun displayItems(diffResult: RecyclerViewBinding<AppInfosByPackage>) {
+        appInfoRecycler.adapter.edit()
+                .replaceAll(diffResult.new.map { AppInfoRecycler.AppInfoViewModel(it, installedPackages) })
+                .commit()
+    }
+
+    override fun showLoading(marketBulkDetailsProgress: Progress) {
+        Timber.d("Loading - $marketBulkDetailsProgress")
+    }
+
+    override fun setRefreshEnabled(enabled: Boolean) {
+        Timber.d("Refreshing - $enabled")
+    }
+
+    override fun showError(error: String) {
+        Timber.e(error)
+    }
+
+    override fun hideError() {
+        Timber.d("Hiding error")
+    }
+
+    override fun scanForUpdatesRequest(): Observable<Unit> =
+            scanForUpdatesRequest
+                    .debounce(500, TimeUnit.MILLISECONDS)
+                    .filter { !state.isLoading() }
+
+    override fun loadCachedItems(): Observable<Unit> =
+            loadCachedItems
+                    .filter { !state.isLoading() }
+
     @Inject lateinit var playClient: PlayClient
     @Inject lateinit var installedPackages: InstalledPackages
 
     lateinit var appInfoRecycler: AppInfoRecycler
-    private val subs = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         BaseApp.appInjector.inject(this)
+        renderer = HomeRenderer(this, AndroidSchedulers.mainThread(), Schedulers.computation())
+        presenter = HomePresenter(this, this, playClient)
+
         val view = inflater.inflate(R.layout.home_view, container)
-        view.findViewById(R.id.the_button).setOnClickListener { makeCall() }
+        view.findViewById(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
         view.findViewById(R.id.clearButton).setOnClickListener { playClient.clearDatabase() }
         appInfoRecycler = AppInfoRecycler(view.findViewById(R.id.home_recyclerview) as RecyclerView, installedPackages)
         return view
@@ -44,13 +101,16 @@ class HomeController : Controller() {
 
     override fun onActivityStarted(activity: Activity) {
         super.onActivityStarted(activity)
-        subscribeToDataSource()
-        playClient.getApps()
+        presenter.start()
+
+        if (state == HomeUi.State.EMPTY) {
+            loadCachedItems.accept(Unit)
+        }
     }
 
     override fun onActivityStopped(activity: Activity) {
         super.onActivityStopped(activity)
-        subs.clear()
+        presenter.stop()
     }
 
     private fun makeCall() {
@@ -74,7 +134,7 @@ class HomeController : Controller() {
     }
 
     private fun subscribeToDataSource() {
-        subs += playClient.bulkDetailsEvents
+        playClient.bulkDetailsEvents
                 .subscribe { response ->
                     when (response) {
                         is PlayClient.BulkDetailsCall.InFlight -> Timber.v("loading...")
@@ -86,7 +146,7 @@ class HomeController : Controller() {
                     }
                 }
 
-        subs += playClient.legacyBulkDetailsEvents
+        playClient.legacyBulkDetailsEvents
                 .subscribe { response ->
                     when (response) {
                         is PlayClient.LegacyBulkDetailsCall.Success -> {
@@ -97,7 +157,7 @@ class HomeController : Controller() {
                     }
                 }
 
-        subs += playClient.detailsCallsEvents
+        playClient.detailsCallsEvents
                 .subscribe { response ->
                     when (response) {
                         is PlayClient.DetailsCall.Success -> {
@@ -108,7 +168,7 @@ class HomeController : Controller() {
                     }
                 }
 
-        subs += playClient.appInfoEvents.subscribe { response ->
+        playClient.appInfoEvents.subscribe { response ->
             when (response) {
                 is PlayClient.GetAppsOperation.Success -> {
                     appInfoRecycler.adapter.edit()
