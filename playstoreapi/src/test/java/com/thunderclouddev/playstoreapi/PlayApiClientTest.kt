@@ -11,7 +11,6 @@ package com.thunderclouddev.playstoreapi
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
-import com.thunderclouddev.utils.anyKt
 import fdfeProtos.AndroidCheckinRequest
 import fdfeProtos.BulkDetailsResponse
 import fdfeProtos.UploadDeviceConfigResponse
