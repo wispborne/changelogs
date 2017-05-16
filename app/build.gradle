@@ -63,7 +63,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             minifyEnabled false
-            testCoverageEnabled true
+            testCoverageEnabled false
             signingConfig signingConfigs.debug
             buildConfigField BOOLEAN, CRASHLYTICS, FALSE
             buildConfigField BOOLEAN, TRACE, FALSE

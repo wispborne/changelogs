@@ -11,6 +11,7 @@ package com.thunderclouddev.changelogs.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.thunderclouddev.changelogs.BaseApp
 import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.dataprovider.PlayClient
 import timber.log.Timber
@@ -28,16 +29,35 @@ class PackageChangedBroadcastReceiver : BroadcastReceiver() {
     @Inject lateinit var installedPackages: InstalledPackages
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Timber.v("Broadcast received: ${intent?.extras.toString()}")
+        BaseApp.appInjector.inject(this)
 
-        if (intent != null && intent.action != null) {
-            if (intent.action == Intent.ACTION_PACKAGE_REMOVED) {
-                Timber.v("Package removed: ${intent.data.toString().removePrefix(dataPrefix)}")
-            } else if (intent.action == Intent.ACTION_PACKAGE_ADDED) {
-                Timber.v("Package added: ${intent.data.toString().removePrefix(dataPrefix)}")
-            } else if (intent.action == Intent.ACTION_PACKAGE_REPLACED) {
-                Timber.v("Package replaced: ${intent.data.toString().removePrefix(dataPrefix)}")
-            }
+        if (intent == null) {
+            return
         }
+
+        if (intent.action == null) {
+            Timber.d("Action was null for package change intent")
+            return
+        }
+
+        if (intent.data == null) {
+            Timber.d("Data was null for package change with action ${intent.action}")
+            return
+        }
+
+        val packageName = intent.data.toString().removePrefix(dataPrefix)
+
+        if (intent.action == Intent.ACTION_PACKAGE_REMOVED) {
+            Timber.v("Package removed: $packageName")
+        } else if (intent.action == Intent.ACTION_PACKAGE_ADDED) {
+            Timber.v("Package added: $packageName")
+        } else if (intent.action == Intent.ACTION_PACKAGE_REPLACED) {
+            Timber.v("Package replaced: $packageName")
+        } else {
+            Timber.w("Intent received with unhandled action: ${intent.action}")
+            return
+        }
+
+        
     }
 }

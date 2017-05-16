@@ -9,7 +9,7 @@
 package com.thunderclouddev.changelogs.ui.home
 
 import android.support.v7.util.DiffUtil
-import com.thunderclouddev.changelogs.ui.Progress
+import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.changelogs.ui.StateRenderer
 import com.thunderclouddev.dataprovider.AppInfosByPackage
 import io.reactivex.Observable

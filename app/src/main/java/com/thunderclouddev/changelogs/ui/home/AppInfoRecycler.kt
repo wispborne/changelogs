@@ -24,8 +24,8 @@ import com.thunderclouddev.changelogs.ui.comparator.Comparators
 import com.thunderclouddev.dataprovider.AppInfosByPackage
 
 /**
- * Created by david on 4/2/17.
- */
+* @author David Whitman on 2 April, 2017.
+*/
 class AppInfoRecycler(private val recyclerView: RecyclerView, installedPackages: InstalledPackages) {
     val adapter = Adapter()
 

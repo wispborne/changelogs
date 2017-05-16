@@ -8,8 +8,9 @@
 
 package com.thunderclouddev.changelogs.ui.home
 
-import com.thunderclouddev.changelogs.ui.Progress
+import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.dataprovider.PlayClient
+import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.utils.plusAssign
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -20,33 +21,35 @@ import javax.inject.Inject
  */
 class HomePresenter @Inject constructor(private val ui: HomeUi,
                                         private val intentions: HomeUi.Intentions,
-                                        private val playClient: PlayClient) {
+                                        private val playClient: PlayClient,
+                                        private val installedPackages: InstalledPackages) {
     val disposables = CompositeDisposable()
 
     fun start() {
         val startScan = intentions.scanForUpdatesRequest()
-                .map { playClient.getApps() } // todo this is not correct for the given request
+//                .map { playClient.getApps() } // todo this is not correct for the given request
+                .map { playClient.scanForUpdates(installedPackages.get.map { it.packageName }) }
                 .map { HomeUi.State.Change.UpdateLoadingMarketBulkDetails(Progress(inProgress = true)) }
                 .cast(HomeUi.State.Change::class.java)
                 .share()
                 .onErrorReturn { HomeUi.State.Change.Error("Failed to get apps") }
 
         val loadApps = intentions.loadCachedItems()
-                .map { playClient.getApps() }
+//                .map { playClient.getApps() }
                 .map { HomeUi.State.Change.ReadFromDatabaseRequested }
                 .cast(HomeUi.State.Change::class.java)
                 .share()
                 .onErrorReturn { HomeUi.State.Change.Error("Failed to get apps") }
 
-        val appsLoaded = playClient.appInfoEvents
-                .filter { it is PlayClient.GetAppsOperation.Success }
-                .cast(PlayClient.GetAppsOperation.Success::class.java)
-                .map { HomeUi.State.Change.ReadFromDatabaseComplete(it.appInfos) }
-                .share()
+//        val appsLoaded = playClient.appInfoEvents
+//                .filter { it is PlayClient.DatabaseChange.Success }
+//                .cast(PlayClient.DatabaseChange.Success::class.java)
+//                .map { HomeUi.State.Change.ReadFromDatabaseComplete(it.appInfos) }
+//                .share()
 
         disposables += startScan
                 .mergeWith(loadApps)
-                .mergeWith(appsLoaded)
+//                .mergeWith(appsLoaded)
                 .doOnNext { Timber.v(it.logString) }
                 .scan(ui.state, HomeUi.State::reduce)
                 .doOnNext { Timber.v(it.toString()) }

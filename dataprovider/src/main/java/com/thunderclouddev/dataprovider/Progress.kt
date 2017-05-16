@@ -6,7 +6,7 @@
  * This source code is made available to help others learn. Please don't clone my app.
  */
 
-package com.thunderclouddev.changelogs.ui
+package com.thunderclouddev.dataprovider
 
 /**
  * Represents some action that is in progress.

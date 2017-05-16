@@ -11,9 +11,10 @@ package com.thunderclouddev.persistence
 import android.content.Context
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.requery.Persistable
-import io.requery.kotlin.eq
+import io.requery.reactivex.ReactiveResult
 import timber.log.Timber
 
 /**
@@ -62,10 +63,19 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
     /**
      * Gets a single item from the database by package name.
      */
-    fun get(packageName: String): Maybe<DbAppInfoEntity> =
+    fun get(packageName: String, versionCode: Int): Maybe<DbAppInfoEntity> =
             db.data.select(DbAppInfoEntity::class)
                     .where(DbAppInfoEntity::packageName.eq(packageName.toLowerCase()))
+                    .and(DbAppInfoEntity::versionCode.eq(versionCode))
                     .get().maybe()
+
+    /**
+     * Gets a list of versions of an app from the database by package name.
+     */
+    fun get(packageName: String): Single<List<DbAppInfoEntity>> =
+            db.data.select(DbAppInfoEntity::class)
+                    .where(DbAppInfoEntity::packageName.eq(packageName.toLowerCase()))
+                    .get().observable().toList()
 
     /**
      * Gets all [DbAppInfo]s from the database.
@@ -76,6 +86,16 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
                     .groupBy { it.packageName })
 
     /**
+     * Emits all changes to the database.
+     */
+    fun observeChanges(): Observable<ReactiveResult<DbAppInfoEntity>> = db.data.select(DbAppInfoEntity::class)
+            .get()
+            .observableResult()
+            .doOnSubscribe { Timber.v("Subscribing to `observeChanges`") }
+            .doAfterTerminate { Timber.v("Terminating `observeChanges`") }
+            .doOnEach { Timber.v("Database change: ${it.value}") }
+
+    /**
      * Clears all [DbAppInfoEntity] items from the database.
      */
     // There is a bug in requery where all apps aren't deleted somehow. Or, they are, but something is residual.
@@ -83,6 +103,19 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
         Timber.v("Clearing all apps in database")
         return db.data.delete(DbAppInfoEntity::class).get().single().toCompletable()
     }
+
+    fun remove(packageName: String, versionCode: Int = -1): Completable =
+            if (versionCode == -1) {
+                db.data.delete(DbAppInfoEntity::class)
+                        .where(DbAppInfoEntity::packageName.eq(packageName.toLowerCase()))
+                        .get().single().toCompletable()
+            } else {
+                db.data.delete(DbAppInfoEntity::class)
+                        .where(DbAppInfoEntity::packageName.eq(packageName.toLowerCase()))
+                        .and(DbAppInfoEntity::versionCode.eq(versionCode))
+                        .get().single().toCompletable()
+            }
+
 
     /**
      * For each property of [AppInfo], replace the `to` value with the `from` value *iff* the `from` value is not null.
