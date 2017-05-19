@@ -15,9 +15,10 @@ ext.versions = [
         compileSdk         : 25,
         buildTools         : '25.0.2',
 
-        kotlin             : "1.1.2-3",
+        kotlin             : "1.1.2-4",
+        kotlinGradlePlugin : "1.1.2-2",
         supportLib         : "25.3.1",
-        gradle             : "2.3.2",
+        gradle             : "3.0.0-alpha1",
         constraintLayout   : "1.0.2",
         playServices       : "9.4.0",
         rxrelay            : "2.0.0",
@@ -44,7 +45,7 @@ ext.versions = [
 ]
 
 ext.gradlePlugins = [
-        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+        kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin",
         gradle: "com.android.tools.build:gradle:$versions.gradle"
 ]
 

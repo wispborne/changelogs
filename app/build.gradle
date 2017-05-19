@@ -100,13 +100,17 @@ android {
         }
     }
 
+    flavorDimensions "fossness"
+
     productFlavors {
         pure {
             buildConfigField BOOLEAN, CRASHLYTICS, FALSE
+            dimension "fossness"
         }
 
         dist {
             buildConfigField BOOLEAN, CRASHLYTICS, TRUE
+            dimension "fossness"
         }
     }
 

@@ -86,12 +86,12 @@ class PlayClient constructor(
     fun scanForUpdates(packageNames: List<String>) {
         fetchFdfeBulkDetailsOnly(packageNames)
                 .map { list ->
-                    list.filter { appInfo ->
+                    list.filter { (packageName, versionCode) ->
                         // Remove apps where the database already contains the same package and version code
-                        database.get(appInfo.packageName)
+                        database.get(packageName)
                                 .blockingGet()
                                 .maxBy { it.versionCode }
-                                ?.versionCode?.equals(appInfo.versionCode)
+                                ?.versionCode?.equals(versionCode)
                                 ?: true
                     }
                 }
