@@ -14,6 +14,7 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.requery.Persistable
+import io.requery.kotlin.eq
 import io.requery.reactivex.ReactiveResult
 import timber.log.Timber
 

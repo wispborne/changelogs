@@ -18,6 +18,8 @@ import com.thunderclouddev.playstoreapi.model.ApiAppInfo
 import io.reactivex.Single
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.experimental.buildSequence
 
 /**
  * Exposes data streams that return results from the Google Play api based on the public methods called.
@@ -60,22 +62,20 @@ class PlayClient constructor(
 
     fun getApps() {
         database.observeChanges()
-//                .map { it.toList() }
-//                .map { items ->
-//                    items.map {
-//                        AppInfosByPackage(it.key, it.value.map { it.toModel() })
-//                    }
-//                }
+                .buffer(500, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
                 .doOnSubscribe { Timber.v("Subscribed to database changes") }
-                .doOnEach { Timber.v("Database change observed") }
-                .subscribe({ result ->
-                    val mapped = result
-                            .toList()
-                            .map { it.toModel() }
-                            .groupBy { it.packageName }
-                            .map { AppInfosByPackage(it.key, it.value) }
-                    appInfoEvents.accept(DatabaseChange.NewItems(mapped))
-                    Timber.d("Observed: ${mapped.joinToString { it.packageName }}")
+                .doOnEach { Timber.v("Database change observed: ${it.value}") }
+                .subscribe({ results ->
+                    results.forEach { result ->
+                        val mapped = result
+                                .toList()
+                                .map { it.toModel() }
+                                .groupBy { it.packageName }
+                                .map { AppInfosByPackage(it.key, it.value) }
+                        appInfoEvents.accept(DatabaseChange.NewItems(mapped))
+                        Timber.d("Observed: ${mapped.joinToString { it.packageName }}")
+                    }
                     //                    appInfoEvents.accept(DatabaseChange.Success(result))
                 }, { error ->
                     Timber.e(error)
@@ -170,6 +170,24 @@ class PlayClient constructor(
                 .map { it.toModel().toDatabaseModel() }
                 .subscribe({
                     database.put(it.apply { versionCode = Random().nextInt() })
+                            .subscribe {
+                                //                                getApps()
+                            }
+                }, { Timber.e(it) })
+    }
+
+    fun addTestAppsToDb() {
+        playApiClient.rxecute(PlayRequest.DetailsRequest("com.thunderclouddev.changelogs"))
+                .map {
+                    buildSequence {
+                        for (i in 0..250) {
+                            yield(it.copy(packageName = it.packageName.plus(i), versionCode = Random().nextInt()))
+                        }
+                    }.toList()
+                }
+                .map { it.map { it.toModel().toDatabaseModel() } }
+                .subscribe({
+                    database.put(it)
                             .subscribe {
                                 //                                getApps()
                             }

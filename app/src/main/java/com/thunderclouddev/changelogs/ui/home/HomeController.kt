@@ -95,7 +95,7 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
         val view = inflater.inflate(R.layout.home_view, container)
         view.findViewById(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
         view.findViewById(R.id.clearButton).setOnClickListener { playClient.clearDatabase() }
-        view.findViewById(R.id.addButton).setOnClickListener { playClient.addTestAppToDb() }
+        view.findViewById(R.id.addButton).setOnClickListener { playClient.addTestAppsToDb() }
         view.findViewById(R.id.removeButton).setOnClickListener { playClient.removeAppFromDb() }
         appInfoRecycler = AppInfoRecycler(view.findViewById(R.id.home_recyclerview) as RecyclerView, installedPackages)
         return view

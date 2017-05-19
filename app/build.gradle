@@ -110,7 +110,16 @@ android {
         }
     }
 
+    configurations {
+        distDebugCompile {}
+        distCiCompile {}
+        distAlphaCompile {}
+        distBetaCompile {}
+        distReleaseCompile {}
+    }
+
     dataBinding.enabled = true
+    kotlin { experimental { coroutines 'enable' } }
 }
 
 dependencies {
@@ -124,6 +133,7 @@ dependencies {
     compile libraries.supportPreferenceLib
     compile libraries.constraintLayout
     compile libraries.kotlin
+    compile libraries.kotlinCoroutines
     compile libraries.rxrelay
     compile libraries.rxjava
     compile libraries.conductor
@@ -140,7 +150,14 @@ dependencies {
         transitive = true
     }
 
+    distDebugCompile libraries.leakCanary
+    distCiCompile libraries.leakCanary
+    distAlphaCompile libraries.leakCanaryNoOp
+    distBetaCompile libraries.leakCanaryNoOp
+    distReleaseCompile libraries.leakCanaryNoOp
+
     testCompile libraries.junit
+    testCompile libraries.leakCanaryNoOp
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
