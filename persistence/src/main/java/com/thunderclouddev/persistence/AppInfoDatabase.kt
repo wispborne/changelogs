@@ -94,7 +94,7 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
             .observableResult()
             .doOnSubscribe { Timber.v("Subscribing to `observeChanges`") }
             .doAfterTerminate { Timber.v("Terminating `observeChanges`") }
-            .doOnEach { Timber.v("Database change: ${it.value}") }
+            .doOnEach { Timber.v("Database change: ${it.value.toList().joinToString { it.packageName + ":" + it.versionCode }}") }
 
     /**
      * Clears all [DbAppInfoEntity] items from the database.
@@ -105,8 +105,8 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
         return db.data.delete(DbAppInfoEntity::class).get().single().toCompletable()
     }
 
-    fun remove(packageName: String, versionCode: Int = -1): Completable =
-            if (versionCode == -1) {
+    fun remove(packageName: String, versionCode: Int? = null): Completable =
+            if (versionCode == null) {
                 db.data.delete(DbAppInfoEntity::class)
                         .where(DbAppInfoEntity::packageName.eq(packageName.toLowerCase()))
                         .get().single().toCompletable()

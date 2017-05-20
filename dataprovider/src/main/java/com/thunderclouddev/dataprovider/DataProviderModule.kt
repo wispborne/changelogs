@@ -10,8 +10,6 @@ package com.thunderclouddev.dataprovider
 
 import android.content.Context
 import com.thunderclouddev.persistence.AppInfoDatabase
-import com.thunderclouddev.playstoreapi.PlayApiClientWrapper
-import com.thunderclouddev.playstoreapi.legacyMarketApi.LegacyApiClientWrapper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -27,7 +25,6 @@ class DataProviderModule {
 
     @Singleton
     @Provides
-    fun playClient(playApiClient: PlayApiClientWrapper,
-                   legacyClient: LegacyApiClientWrapper,
-                   context: Context) = PlayClient(playApiClient, legacyClient, AppInfoDatabase.create(context, debugMode))
+    fun database(context: Context): Database
+            = Database(AppInfoDatabase.create(context, debugMode))
 }

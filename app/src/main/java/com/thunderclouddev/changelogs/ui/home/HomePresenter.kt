@@ -41,7 +41,7 @@ class HomePresenter @Inject constructor(private val ui: HomeUi,
                 .share()
                 .onErrorReturn { HomeUi.State.Change.Error("Failed to get apps") }
 
-//        val appsLoaded = playClient.appInfoEvents
+//        val appsLoaded = playClient.databaseChanges
 //                .filter { it is PlayClient.DatabaseChange.Success }
 //                .cast(PlayClient.DatabaseChange.Success::class.java)
 //                .map { HomeUi.State.Change.ReadFromDatabaseComplete(it.appInfos) }

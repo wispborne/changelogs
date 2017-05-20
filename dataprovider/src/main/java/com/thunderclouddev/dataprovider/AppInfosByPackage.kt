@@ -8,6 +8,7 @@
 
 package com.thunderclouddev.dataprovider
 
+import com.thunderclouddev.utils.firstOr
 import java.util.*
 
 /**
@@ -17,7 +18,7 @@ import java.util.*
 data class AppInfosByPackage(val packageName: String, val appInfos: List<AppInfo>) {
     val asMap: Map<String, List<AppInfo>> by lazy { HashMap<String, List<AppInfo>>().apply { put(packageName, appInfos) } }
 
-    val mostRecentVersion = appInfos.sortedByDescending { it.versionCode }.first()
+    val mostRecentVersion = appInfos.sortedByDescending { it.versionCode }.firstOr(AppInfo.EMPTY)
 
     val asMapByVersionCode: Map<Int, AppInfo> by lazy { appInfos.associateBy { it.versionCode } }
 

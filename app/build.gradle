@@ -148,6 +148,9 @@ dependencies {
     kapt libraries.daggerCompiler
     kapt libraries.databinding
     compile libraries.playServices
+    compile libraries.powerAdapters
+    compile libraries.powerAdaptersData
+    compile libraries.powerAdaptersRecyclerView
 
     distCompile libraries.stetho
     distCompile(libraries.crashlytics) {

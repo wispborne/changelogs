@@ -9,7 +9,6 @@
 package com.thunderclouddev.dataprovider
 
 import com.jakewharton.rxrelay2.BehaviorRelay
-import com.thunderclouddev.persistence.AppInfoDatabase
 import com.thunderclouddev.playstoreapi.PlayApiClientWrapper
 import com.thunderclouddev.playstoreapi.PlayRequest
 import com.thunderclouddev.playstoreapi.legacyMarketApi.LegacyApiClientWrapper
@@ -18,17 +17,19 @@ import com.thunderclouddev.playstoreapi.model.ApiAppInfo
 import io.reactivex.Single
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.experimental.buildSequence
 
 /**
  * Exposes data streams that return results from the Google Play api based on the public methods called.
  * Created by david on 4/17/17.
  */
-class PlayClient constructor(
+@Singleton
+class PlayClient @Inject constructor(
         private val playApiClient: PlayApiClientWrapper,
         private val legacyClient: LegacyApiClientWrapper,
-        private val database: AppInfoDatabase
+        private val database: Database
 ) {
     sealed class BulkDetailsCall {
         data class InFlight(val progress: Progress) : BulkDetailsCall()
@@ -58,30 +59,7 @@ class PlayClient constructor(
     val bulkDetailsEvents: BehaviorRelay<BulkDetailsCall> = BehaviorRelay.create()
     val legacyBulkDetailsEvents: BehaviorRelay<LegacyBulkDetailsCall> = BehaviorRelay.create()
     val detailsCallsEvents: BehaviorRelay<DetailsCall> = BehaviorRelay.create()
-    val appInfoEvents: BehaviorRelay<DatabaseChange> = BehaviorRelay.create()
 
-    fun getApps() {
-        database.observeChanges()
-                .buffer(500, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged()
-                .doOnSubscribe { Timber.v("Subscribed to database changes") }
-                .doOnEach { Timber.v("Database change observed: ${it.value}") }
-                .subscribe({ results ->
-                    results.forEach { result ->
-                        val mapped = result
-                                .toList()
-                                .map { it.toModel() }
-                                .groupBy { it.packageName }
-                                .map { AppInfosByPackage(it.key, it.value) }
-                        appInfoEvents.accept(DatabaseChange.NewItems(mapped))
-                        Timber.d("Observed: ${mapped.joinToString { it.packageName }}")
-                    }
-                    //                    appInfoEvents.accept(DatabaseChange.Success(result))
-                }, { error ->
-                    Timber.e(error)
-                    //                    appInfoEvents.accept(DatabaseChange.Error(error))
-                })
-    }
 
     fun scanForUpdates(packageNames: List<String>) {
         fetchFdfeBulkDetailsOnly(packageNames)
@@ -109,12 +87,6 @@ class PlayClient constructor(
                         detailsCallsEvents.accept(DetailsCall.Error(error))
                     }
                 }
-    }
-
-    fun clearDatabase() {
-        database.clearAll().subscribe {
-            //            getApps()
-        }
     }
 
     private fun fetchFdfeBulkDetails(packageNames: List<String>) {

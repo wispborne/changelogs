@@ -47,9 +47,21 @@
             android:text="Add Item"/>
 
         <Button
+            android:id="@+id/addManyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Many Items"/>
+
+        <Button
             android:id="@+id/removeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remove Changelogs"/>
+
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refresh"/>
     </LinearLayout>
 </FrameLayout>

@@ -37,6 +37,7 @@ dependencies {
     compile libraries.kotlin
     testCompile libraries.junit
     compile libraries.rxjava
+    compile libraries.timber
 
     testCompile libraries.mockitoCore
 
