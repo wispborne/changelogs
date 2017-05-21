@@ -10,7 +10,7 @@ package com.thunderclouddev.playstoreapi.legacyMarketApi
 
 import okhttp3.MediaType
 
-internal object MarketApiConstants {
+internal object MarketApiConstantsInternal {
     val CONTENT_TYPE: MediaType = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8")
     val PROTOCOL_VERSION = 2
 
@@ -18,4 +18,8 @@ internal object MarketApiConstants {
     val OPERATOR_NAME_ID_PAIR = "T-Mobile" to "310260"
 
     val URL = "http://android.clients.google.com/market/api/ApiRequest"
+}
+
+object MarketApiConstants{
+    val REQUESTS_PER_GROUP = 10
 }

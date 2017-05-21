@@ -46,6 +46,8 @@ open class BaseApp : Application() {
         initLogging()
         DataProviderModule.debugMode = BuildConfig.DEBUG
 
+        // todo remove this
+        preferences.showSystemAppsPreference = true
     }
 
     @CallSuper

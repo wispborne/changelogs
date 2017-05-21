@@ -9,11 +9,15 @@
 package com.thunderclouddev.dataprovider
 
 import com.jakewharton.rxrelay2.BehaviorRelay
+import com.thunderclouddev.deeplink.logging.timberkt.KTimber
 import com.thunderclouddev.playstoreapi.PlayApiClientWrapper
 import com.thunderclouddev.playstoreapi.PlayRequest
 import com.thunderclouddev.playstoreapi.legacyMarketApi.LegacyApiClientWrapper
+import com.thunderclouddev.playstoreapi.legacyMarketApi.MarketApiConstants
 import com.thunderclouddev.playstoreapi.legacyMarketApi.MarketRequest
 import com.thunderclouddev.playstoreapi.model.ApiAppInfo
+import com.thunderclouddev.utils.empty
+import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
 import java.util.*
@@ -62,6 +66,7 @@ class PlayClient @Inject constructor(
 
 
     fun scanForUpdates(packageNames: List<String>) {
+        // Get latest version codes for all packages
         fetchFdfeBulkDetailsOnly(packageNames)
                 .map { list ->
                     list.filter { (packageName, versionCode) ->
@@ -73,8 +78,23 @@ class PlayClient @Inject constructor(
                                 ?: true
                     }
                 }
+                // For apps/versions we don't have yet, try to get data from the legacy api (faster)
                 .flatMap { newApps -> fetchLegacyBulkDetailsOnly(newApps.map { it.packageName }) }
-                .subscribe({}, { error -> Timber.e(error) })
+                // Get the packages that the fdfeBulkUpdate missed
+                .map { packageNames.minus(it.map { it.packageName }) }
+                .doAfterSuccess { KTimber.d { "Bulk details missed ${it.size} items, trying Details calls for: ${it.joinToString()}" } }
+                // And do a fdfe "details" call for them
+                .flatMap {
+                    Observable.fromIterable(it)
+                            .flatMap {
+                                fetchDetailsOnly(it)
+                                        .onErrorReturnItem(ApiAppInfo(packageName = String.empty, versionCode = 0))
+                                        .toObservable()
+                            }
+                            .filter { it.packageName.isNotBlank() }
+                            .toList()
+                }
+                .subscribe({}, { error -> KTimber.e { error.toString() } })
     }
 
     fun fetchDetails(packageName: String) {
@@ -114,10 +134,14 @@ class PlayClient @Inject constructor(
     }
 
     private fun fetchLegacyBulkDetailsOnly(packageNames: List<String>): Single<List<ApiAppInfo>> {
-        return legacyClient.rxecute(MarketRequest.AppsRequest(packageNames))
+        return Observable.fromIterable(packageNames)
+                .buffer(MarketApiConstants.REQUESTS_PER_GROUP)
+                .flatMap { legacyClient.rxecute(MarketRequest.AppsRequest(it)).toObservable() }
+                .toList()
                 .flatMap { response ->
-                    database.put(response.map { it.toModel().toDatabaseModel() })
-                            .toSingleDefault(response)
+                    val flattenedList = response.flatten()
+                    database.put(flattenedList.map { it.toModel().toDatabaseModel() })
+                            .toSingleDefault(flattenedList)
                 }
     }
 

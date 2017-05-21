@@ -58,6 +58,6 @@ class PackageChangedBroadcastReceiver : BroadcastReceiver() {
             return
         }
 
-        
+        playClient.scanForUpdates(listOf(intent.data.toString()))
     }
 }

@@ -41,14 +41,14 @@ internal class MarketApiClient(
             .setAndroidId(gsfId)
             .setAuthSubToken(authToken)
             .setIsSecure(false)
-            .setVersion(MarketApiConstants.VERSION)
+            .setVersion(MarketApiConstantsInternal.VERSION)
             .setUserLanguage(locale.language.toLowerCase())
             .setUserCountry(locale.country.toLowerCase())
             .setDeviceAndSdkVersion("passion:9")
-            .setOperatorAlpha(MarketApiConstants.OPERATOR_NAME_ID_PAIR.first)
-            .setSimOperatorAlpha(MarketApiConstants.OPERATOR_NAME_ID_PAIR.first)
-            .setOperatorNumeric(MarketApiConstants.OPERATOR_NAME_ID_PAIR.second)
-            .setSimOperatorNumeric(MarketApiConstants.OPERATOR_NAME_ID_PAIR.second)
+            .setOperatorAlpha(MarketApiConstantsInternal.OPERATOR_NAME_ID_PAIR.first)
+            .setSimOperatorAlpha(MarketApiConstantsInternal.OPERATOR_NAME_ID_PAIR.first)
+            .setOperatorNumeric(MarketApiConstantsInternal.OPERATOR_NAME_ID_PAIR.second)
+            .setSimOperatorNumeric(MarketApiConstantsInternal.OPERATOR_NAME_ID_PAIR.second)
             .build()
 
     override fun <T> rxecute(request: com.thunderclouddev.playstoreapi.Request<MarketRequest<*>, T>): Single<T> =
@@ -61,7 +61,7 @@ internal class MarketApiClient(
             mapOf("Cookie" to "ANDROID=$authToken",
                     "User-Agent" to "Android-Market/2 (sapphire PLAT-RC33); gzip",
                     "Accept-Charset" to "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                    "Content-Type" to MarketApiConstants.CONTENT_TYPE.toString()
+                    "Content-Type" to MarketApiConstantsInternal.CONTENT_TYPE.toString()
             )
 }
 
@@ -70,13 +70,12 @@ sealed class MarketRequest<T> : com.thunderclouddev.playstoreapi.Request<MarketR
 
     class AppsRequest(val packageNamesRequested: List<String>) : MarketRequest<List<ApiAppInfo>>() {
         private val APPS_PER_REQUEST = 1
-        private val REQUESTS_PER_GROUP = 10
 
         override fun execute(apiClient: RxOkHttpClient, defaultHeaders: Headers, context: Market2.RequestContext): Single<List<ApiAppInfo>> {
 
-            val packageNames = if (packageNamesRequested.size > REQUESTS_PER_GROUP) {
-                Timber.w("Only $REQUESTS_PER_GROUP apps at a time are supported!")
-                packageNamesRequested.take(REQUESTS_PER_GROUP)
+            val packageNames = if (packageNamesRequested.size > MarketApiConstants.REQUESTS_PER_GROUP) {
+                Timber.w("Only $MarketApiConstants.REQUESTS_PER_GROUP apps at a time are supported!")
+                packageNamesRequested.take(MarketApiConstants.REQUESTS_PER_GROUP)
             } else {
                 packageNamesRequested
             }
@@ -99,10 +98,10 @@ sealed class MarketRequest<T> : com.thunderclouddev.playstoreapi.Request<MarketR
 
             val encodedRequestBody = Base64.encodeBytes(request.build().toByteArray(), Base64.URL_SAFE)
             return apiClient.rxecute(Request.Builder()
-                    .url(MarketApiConstants.URL)
+                    .url(MarketApiConstantsInternal.URL)
                     .post(RequestBody.create(
-                            MarketApiConstants.CONTENT_TYPE,
-                            "version=${MarketApiConstants.PROTOCOL_VERSION}&request=$encodedRequestBody".toByteArray()))
+                            MarketApiConstantsInternal.CONTENT_TYPE,
+                            "version=${MarketApiConstantsInternal.PROTOCOL_VERSION}&request=$encodedRequestBody".toByteArray()))
                     .headers(defaultHeaders)
                     .build())
                     .doOnSubscribe { Timber.v("FdfeBulk fetching ${packageNames.joinToString()}") }

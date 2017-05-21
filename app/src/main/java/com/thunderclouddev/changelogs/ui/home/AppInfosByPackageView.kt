@@ -17,6 +17,7 @@ import com.thunderclouddev.changelogs.BaseApp
 import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.changelogs.databinding.AppInfoItemBinding
 import com.thunderclouddev.changelogs.ui.BaseRecyclerViewAdapter
+import com.thunderclouddev.changelogs.ui.IconBinder
 import com.thunderclouddev.dataprovider.AppInfosByPackage
 import javax.inject.Inject
 
@@ -43,11 +44,12 @@ class AppInfosByPackageView : FrameLayout {
 
     fun bind(appInfosByPackage: AppInfosByPackage) {
         binding.model = AppInfoRecycler.AppInfoViewModel(appInfosByPackage, installedPackages)
+        IconBinder.bindIcon(appInfosByPackage.mostRecentAppInfo, binding.itemAppItemIcon)
     }
 
 
     data class AppInfoViewModel(val appInfosByPackage: AppInfosByPackage, private val installedPackages: InstalledPackages) : BaseRecyclerViewAdapter.ViewModel {
-        val mostRecentAppInfo = appInfosByPackage.mostRecentVersion
+        val mostRecentAppInfo = appInfosByPackage.mostRecentAppInfo
         val installedAppInfo = AppUtils.findCurrentlyInstalledApp(appInfosByPackage, installedPackages)
         val numberOfVersionsTracked = appInfosByPackage.appInfos.size
     }

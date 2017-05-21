@@ -55,7 +55,7 @@ class AppInfoRecycler(private val recyclerView: RecyclerView, installedPackages:
     }
 
     data class AppInfoViewModel(val appInfosByPackage: AppInfosByPackage, private val installedPackages: InstalledPackages) : BaseRecyclerViewAdapter.ViewModel {
-        val mostRecentAppInfo = appInfosByPackage.mostRecentVersion
+        val mostRecentAppInfo = appInfosByPackage.mostRecentAppInfo
         val installedAppInfo = AppUtils.findCurrentlyInstalledApp(appInfosByPackage, installedPackages)
         val numberOfVersionsTracked = appInfosByPackage.appInfos.size
     }

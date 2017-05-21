@@ -9,6 +9,8 @@
 package com.thunderclouddev.changelogs.ui.home
 
 import android.app.Activity
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -104,8 +106,11 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
         view.findViewById(R.id.refreshButton).setOnClickListener { database.refresh() }
         val recyclerView = view.findViewById(R.id.home_recyclerview) as RecyclerView
         val appInfoList = AppInfoList(database, installedPackages)
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
+        val linearLayoutManager = LinearLayoutManager(recyclerView.context)
+        recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = appInfoList.adapter.toRecyclerAdapter()
+        recyclerView.addItemDecoration(DividerItemDecoration(activity, linearLayoutManager.orientation)
+                .apply { this.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.list_divider)) })
         return view
     }
 

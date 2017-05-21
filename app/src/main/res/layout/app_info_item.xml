@@ -8,156 +8,148 @@
   -->
 
 <layout xmlns:bind="http://schemas.android.com/tools">
-<data>
-    <variable
-        name="model"
-        type="com.thunderclouddev.changelogs.ui.home.AppInfoRecycler.AppInfoViewModel" />
-</data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                 android:id="@+id/item_layout"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="0dp"
-                 android:background="?selectableItemBackground"
-                 android:padding="0dp">
+    <data>
 
-        <LinearLayout
+        <variable
+            name="model"
+            type="com.thunderclouddev.changelogs.ui.home.AppInfoRecycler.AppInfoViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/spacingMedium">
+
+        <ImageView
+            android:id="@+id/item_appItem_icon"
+            android:layout_width="@dimen/appInfo_icon_size"
+            android:layout_height="@dimen/appInfo_icon_size"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/contentDesc_appIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/item_appItem_version_local"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_appItem_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacingMedium"
+            android:ellipsize="end"
+            android:hint="title"
+            android:maxLines="1"
+            android:text="@{model.mostRecentAppInfo.title}"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_subhead"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/item_appItem_icon"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_appItem_creator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacingMedium"
+            android:ellipsize="end"
+            android:hint="creator"
+            android:maxLines="1"
+            android:text="@{model.mostRecentAppInfo.developer}"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintLeft_toRightOf="@id/item_appItem_icon"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_title"/>
+
+        <ImageView
+            android:id="@+id/icon_item_appInfo_blacklist"
+            android:layout_width="@dimen/item_appItem_textDrawable_size"
+            android:layout_height="@dimen/item_appItem_textDrawable_size"
+            android:layout_marginStart="@dimen/spacingMedium"
+            app:layout_constraintLeft_toRightOf="@id/item_appItem_icon"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_creator"
+            app:srcCompat="@drawable/ic_blacklist"/>
+
+        <com.thunderclouddev.changelogs.ui.views.TextViewWithResizableCompoundDrawable
+            android:id="@+id/item_appItem_version_remote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/spacingTiny"
+            android:drawableStart="@drawable/ic_shop_black_24dp"
+            android:ellipsize="end"
+            android:hint="remote version"
+            android:maxLines="1"
+            android:text="@{model.mostRecentAppInfo.versionName}"
+            android:textColor="?android:attr/textColorSecondary"
+            app:compoundDrawableHeight="@dimen/item_appItem_textDrawable_size"
+            app:compoundDrawableWidth="@dimen/item_appItem_textDrawable_size"
+            app:layout_constraintLeft_toRightOf="@id/icon_item_appInfo_blacklist"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_creator"/>
+
+        <ImageView
+            android:id="@+id/item_appItem_updateBadge"
+            android:layout_width="@dimen/item_appItem_textDrawable_size"
+            android:layout_height="@dimen/item_appItem_textDrawable_size"
+            android:layout_marginStart="@dimen/spacingTiny"
+            android:tint="@color/primary"
+            app:layout_constraintLeft_toRightOf="@id/item_appItem_version_remote"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_creator"
+            app:srcCompat="@drawable/ic_new_releases_black_24dp"/>
+
+        <com.thunderclouddev.changelogs.ui.views.TextViewWithResizableCompoundDrawable
+            android:id="@+id/item_appItem_version_local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacingMedium"
+            android:drawablePadding="@dimen/spacingTiny"
+            android:drawableStart="@drawable/ic_phone_android_black_24dp"
+            android:ellipsize="end"
+            android:hint="version"
+            android:maxLines="1"
+            android:text="todo"
+            android:textColor="?android:attr/textColorSecondary"
+            app:compoundDrawableHeight="@dimen/item_appItem_textDrawable_size"
+            app:compoundDrawableWidth="@dimen/item_appItem_textDrawable_size"
+            app:layout_constraintLeft_toRightOf="@id/item_appItem_icon"
+            app:layout_constraintTop_toBottomOf="@id/icon_item_appInfo_blacklist"
+            app:srcCompat="@drawable/ic_new_releases_black_24dp"/>
+
+        <TextView
+            android:id="@+id/item_appInfo_lastUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacingTiny"
+            android:layout_marginTop="@dimen/spacingMedium"
+            android:hint="last updated"
+            android:textColor="?android:textColorPrimary"
+            android:textStyle="italic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_version_local"
+            bind:shortDateText="@{model.mostRecentAppInfo.updateDate}"/>
+
+        <TextView
+            android:id="@+id/item_appItem_changes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/spacingMedium">
+            android:layout_below="@id/item_appInfo_lastUpdated"
+            android:layout_marginTop="@dimen/spacingSmall"
+            android:hint="recent changes"
+            android:text="@{model.mostRecentAppInfo.recentChangesHtml}"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_appInfo_lastUpdated"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingSmall"
+            android:hint="number of apps"
+            android:text="@{@string/appInfo_item_revisions(model.numberOfVersionsTracked)}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_appItem_changes"/>
 
-                <ImageView
-                    android:id="@+id/item_appItem_icon"
-                    android:layout_width="@dimen/appInfo_icon_size"
-                    android:layout_height="@dimen/appInfo_icon_size"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/spacingSmall"
-                    android:contentDescription="@string/contentDesc_appIcon"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/item_appItem_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/item_appItem_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:hint="title"
-                        android:text="@{model.mostRecentAppInfo.title}"
-                        android:textColor="?android:textColorPrimary"
-                        android:textSize="@dimen/text_subhead"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/item_appItem_creator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:hint="creator"
-                        android:text="@{model.mostRecentAppInfo.developer}"
-                        android:textColor="?android:attr/textColorSecondary"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/icon_item_appInfo_blacklist"
-                            android:layout_width="@dimen/item_appItem_textDrawable_size"
-                            android:layout_height="@dimen/item_appItem_textDrawable_size"
-                            app:srcCompat="@drawable/ic_blacklist"/>
-
-                        <com.thunderclouddev.changelogs.ui.views.TextViewWithResizableCompoundDrawable
-                            android:id="@+id/item_appItem_version_remote"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="@dimen/spacingTiny"
-                            android:drawableStart="@drawable/ic_shop_black_24dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:hint="remote version"
-                            android:text="@{model.mostRecentAppInfo.versionName}"
-                            android:textColor="?android:attr/textColorSecondary"
-                            app:compoundDrawableHeight="@dimen/item_appItem_textDrawable_size"
-                            app:compoundDrawableWidth="@dimen/item_appItem_textDrawable_size"/>
-
-                        <ImageView
-                            android:id="@+id/item_appItem_updateBadge"
-                            android:layout_width="@dimen/item_appItem_textDrawable_size"
-                            android:layout_height="@dimen/item_appItem_textDrawable_size"
-                            android:layout_marginStart="@dimen/spacingTiny"
-                            android:tint="@color/primary"
-                            app:srcCompat="@drawable/ic_new_releases_black_24dp"/>
-                    </LinearLayout>
-
-                    <com.thunderclouddev.changelogs.ui.views.TextViewWithResizableCompoundDrawable
-                        android:id="@+id/item_appItem_version_local"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/spacingTiny"
-                        android:drawableStart="@drawable/ic_phone_android_black_24dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:hint="version"
-                        android:text="todo"
-                        android:textColor="?android:attr/textColorSecondary"
-                        app:compoundDrawableHeight="@dimen/item_appItem_textDrawable_size"
-                        app:compoundDrawableWidth="@dimen/item_appItem_textDrawable_size"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/item_appInfo_changesLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacingMedium">
-
-                <TextView
-                    android:id="@+id/item_appInfo_lastUpdated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacingTiny"
-                    android:hint="last updated"
-                    bind:shortDateText="@{model.mostRecentAppInfo.updateDate}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textStyle="italic"/>
-
-                <TextView
-                    android:id="@+id/item_appItem_changes"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/item_appInfo_lastUpdated"
-                    android:hint="recent changes"
-                    android:text="@{model.mostRecentAppInfo.recentChangesHtml}"
-                    android:textColor="?android:textColorPrimary"/>
-            </RelativeLayout>
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="number of apps"
-                android:text="@{@string/appInfo_item_revisions(model.numberOfVersionsTracked)}"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/item_divider"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/primary"/>
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
