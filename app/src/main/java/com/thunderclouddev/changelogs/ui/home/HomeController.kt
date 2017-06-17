@@ -24,8 +24,6 @@ import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.changelogs.R
 import com.thunderclouddev.changelogs.ui.StateRenderer
 import com.thunderclouddev.dataprovider.AppInfosByPackage
-import com.thunderclouddev.dataprovider.Database
-import com.thunderclouddev.dataprovider.PlayClient
 import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.deeplink.logging.timberkt.KTimber
 import io.reactivex.Observable
@@ -49,6 +47,7 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
 
     var scanForUpdatesRequest: PublishRelay<Unit> = PublishRelay.create()
     var loadCachedItems: PublishRelay<Unit> = PublishRelay.create()
+    val clearDatabase: PublishRelay<Unit> = PublishRelay.create()
 
     override fun render(state: HomeUi.State) {
         this.state = state
@@ -86,11 +85,10 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
             loadCachedItems
                     .filter { !state.isLoading() }
 
-    @Inject lateinit var playClient: PlayClient
-    @Inject lateinit var database: Database
-    @Inject lateinit var installedPackages: InstalledPackages
+    override fun clearDatabase(): Observable<Unit> = clearDatabase
+            .debounce(500, TimeUnit.SECONDS)
 
-    lateinit var appInfoRecycler: AppInfoRecycler
+    @Inject lateinit var installedPackages: InstalledPackages
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         BaseApp.appInjector.inject(this)
@@ -99,7 +97,7 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
 
         val view = inflater.inflate(R.layout.home_view, container)
         view.findViewById(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
-        view.findViewById(R.id.clearButton).setOnClickListener { database.clear() }
+        view.findViewById(R.id.clearButton).setOnClickListener { clearDatabase.accept(Unit) }
         view.findViewById(R.id.addButton).setOnClickListener { playClient.addTestAppToDb() }
         view.findViewById(R.id.addManyButton).setOnClickListener { playClient.addTestAppsToDb() }
         view.findViewById(R.id.removeButton).setOnClickListener { playClient.removeAppFromDb() }
@@ -117,7 +115,6 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
     override fun onActivityStarted(activity: Activity) {
         super.onActivityStarted(activity)
         presenter.start()
-        subscribeToDataSource()
 
         if (state == HomeUi.State.EMPTY) {
             loadCachedItems.accept(Unit)
@@ -144,44 +141,5 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
                 "com.curse.highwind")
 
         playClient.scanForUpdates(packageNames)
-//        playClient.fetchBulkDetails(packageNames)
-//        playClient.fetchDetails("com.discord")
-//        playClient.addTestAppToDb()
-    }
-
-    private fun subscribeToDataSource() {
-//        database.databaseChanges
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe { response ->
-//                    KTimber.v {"Updating recyclerview: $response"}
-//
-//                    when (response) {
-//                        is PlayClient.DatabaseChange.NewItems -> {
-////                            ArrayData()
-////                            appInfoRecycler.adapter.edit()
-////                                    .replaceAll(response.appInfos.map { AppInfoRecycler.AppInfoViewModel(it, installedPackages) })
-////                                    .commit()
-//                        }
-////                        is PlayClient.DatabaseChange.ItemAdded -> {
-////                            appInfoRecycler.adapter.edit()
-////                                    .add(AppInfoRecycler.AppInfoViewModel(AppInfosByPackage(response.appInfo.packageName, listOf(response.appInfo)), installedPackages))
-////                                    .commit()
-////
-////                        }
-////                        is PlayClient.DatabaseChange.ItemChanged -> {
-////                            val item = AppInfoRecycler.AppInfoViewModel(AppInfosByPackage(response.appInfo.packageName, listOf(response.appInfo)), installedPackages)
-////                            appInfoRecycler.adapter.edit()
-////                                    .remove(item)
-////                                    .add(item)
-////                                    .commit()
-////                        }
-////                        is PlayClient.DatabaseChange.ItemRemoved -> {
-////                            appInfoRecycler.adapter.edit()
-////                                    .remove(AppInfoRecycler.AppInfoViewModel(AppInfosByPackage(response.appInfo.packageName, listOf(response.appInfo)), installedPackages))
-//////                            .replaceAll(response.appInfos.map { AppInfoRecycler.AppInfoViewModel(it, installedPackages) })
-////                                    .commit()
-////                        }
-//                    }
-//                }
     }
 }

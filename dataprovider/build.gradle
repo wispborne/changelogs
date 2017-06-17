@@ -24,28 +24,34 @@ android {
 
     }
     buildTypes {
+        debug {
+        }
+        ci {
+        }
+        alpha {
+        }
+        beta {
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':persistence')
-    compile project(':playstoreapi')
-    compile project(':utils')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':persistence')
+    implementation project(':playstoreapi')
+    implementation project(':utils')
 
-    compile libraries.kotlin
-    compile libraries.kotlinCoroutines
-    compile libraries.rxrelay
-    compile libraries.rxjava
-    compile libraries.dagger
+    implementation libraries.kotlin
+    implementation libraries.kotlinCoroutines
+    implementation libraries.rxrelay
+    implementation libraries.rxjava
+    implementation libraries.dagger
     kapt libraries.daggerCompiler
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile libraries.junit
+    testImplementation libraries.junit
 }

@@ -71,9 +71,5 @@ class Database @Inject constructor(private val database: AppInfoDatabase) {
 
     fun remove(packageName: String, versionCode: Int? = null) = database.remove(packageName, versionCode)
 
-    fun clear() {
-        database.clearAll().subscribe {
-            //            getApps()
-        }
-    }
+    fun clear() = database.clearAll()
 }

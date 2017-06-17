@@ -26,6 +26,8 @@ interface HomeUi : StateRenderer<HomeUi.State> {
         fun scanForUpdatesRequest(): Observable<Unit>
 
         fun loadCachedItems(): Observable<Unit>
+
+        fun clearDatabase(): Observable<Unit>
     }
 
     interface Actions {
@@ -63,7 +65,7 @@ interface HomeUi : StateRenderer<HomeUi.State> {
             class ReadFromDatabaseComplete(val data: List<AppInfosByPackage>) : Change("Read apps from database - $data")
 
             //            class UpdateLoadingFdfeDetails(val refreshingState: Progress)
-            class Error(val message: String) : Change("Error - $message")
+            class Error(val throwable: Throwable) : Change("Error - ${throwable.message}")
 
             object ReadFromDatabaseRequested : Change("Read from database requested")
         }

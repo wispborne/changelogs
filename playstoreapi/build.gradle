@@ -33,9 +33,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+        }
+        ci {
+        }
+        alpha {
+        }
+        beta {
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets {
@@ -45,24 +51,24 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/ChangelogsProtos.jar')
-    compile project(':utils')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/ChangelogsProtos.jar')
+    implementation project(':utils')
 
-    compile libraries.kotlin
-    compile libraries.rxjava
-    compile libraries.timber
-    compile libraries.okhttp
-    compile libraries.rxandroid
+    implementation libraries.kotlin
+    implementation libraries.rxjava
+    implementation libraries.timber
+    implementation libraries.okhttp
+    implementation libraries.rxandroid
 
-    testCompile libraries.junit
-    testCompile libraries.mockitoCore
-    testCompile libraries.mockitoKotlin
-    testCompile libraries.spekApi
-    testCompile libraries.spekJunitPlatformEngine
-    testCompile libraries.junitPlatformRunner
+    testImplementation libraries.junit
+    testImplementation libraries.mockitoCore
+    testImplementation libraries.mockitoKotlin
+    testImplementation libraries.spekApi
+    testImplementation libraries.spekJunitPlatformEngine
+    testImplementation libraries.junitPlatformRunner
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

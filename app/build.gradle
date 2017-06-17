@@ -122,51 +122,54 @@ android {
         distReleaseCompile {}
     }
 
+    flavorSelection 'fossness', 'dist'
+
     dataBinding.enabled = true
     kotlin { experimental { coroutines 'enable' } }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':utils')
-    compile project(':dataprovider')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':utils')
+    implementation project(':dataprovider')
 
-    compile libraries.appcompat
-    compile libraries.supportLib
-    compile libraries.supportDesignLib
-    compile libraries.supportPreferenceLib
-    compile libraries.constraintLayout
-    compile libraries.kotlin
-    compile libraries.kotlinCoroutines
-    compile libraries.rxrelay
-    compile libraries.rxjava
-    compile libraries.conductor
-    compile libraries.kotpref
-    compile libraries.picasso
-    compile libraries.timber
-    compile libraries.dagger
+    implementation libraries.appcompat
+    implementation libraries.supportLib
+    implementation libraries.supportDesignLib
+    implementation libraries.supportPreferenceLib
+    implementation libraries.constraintLayout
+    implementation libraries.kotlin
+    implementation libraries.kotlinCoroutines
+    implementation libraries.rxrelay
+    implementation libraries.rxjava
+    implementation libraries.conductor
+    implementation libraries.kotpref
+    implementation libraries.picasso
+    implementation libraries.timber
+    implementation libraries.dagger
     kapt libraries.daggerCompiler
     kapt libraries.databinding
-    compile libraries.playServices
-    compile libraries.powerAdapters
-    compile libraries.powerAdaptersData
-    compile libraries.powerAdaptersRecyclerView
+    implementation libraries.playServices
+    implementation libraries.powerAdapters
+    implementation libraries.powerAdaptersData
+    implementation libraries.powerAdaptersRecyclerView
 
-    distCompile libraries.stetho
-    distCompile(libraries.crashlytics) {
+    distImplementation libraries.stetho
+    distImplementation(libraries.crashlytics) {
         transitive = true
     }
 
-    distDebugCompile libraries.leakCanary
-    distCiCompile libraries.leakCanary
-    distAlphaCompile libraries.leakCanaryNoOp
-    distBetaCompile libraries.leakCanaryNoOp
-    distReleaseCompile libraries.leakCanaryNoOp
+    distImplementation libraries.leakCanary
+    distImplementation libraries.leakCanaryNoOp
+//    distCiImplementation libraries.leakCanary
+//    distAlphaImplementation libraries.leakCanaryNoOp
+//    distBetaImplementation libraries.leakCanaryNoOp
+//    distReleaseImplementation libraries.leakCanaryNoOp
 
-    testCompile libraries.junit
-    testCompile libraries.leakCanaryNoOp
+    testImplementation libraries.junit
+    testImplementation libraries.leakCanaryNoOp
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

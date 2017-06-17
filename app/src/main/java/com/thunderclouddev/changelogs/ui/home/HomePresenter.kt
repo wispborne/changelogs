@@ -9,6 +9,7 @@
 package com.thunderclouddev.changelogs.ui.home
 
 import com.thunderclouddev.changelogs.InstalledPackages
+import com.thunderclouddev.dataprovider.Database
 import com.thunderclouddev.dataprovider.PlayClient
 import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.utils.plusAssign
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class HomePresenter @Inject constructor(private val ui: HomeUi,
                                         private val intentions: HomeUi.Intentions,
                                         private val playClient: PlayClient,
-                                        private val installedPackages: InstalledPackages) {
+                                        private val installedPackages: InstalledPackages,
+                                        private val database: Database) {
     val disposables = CompositeDisposable()
 
     fun start() {
@@ -32,14 +34,18 @@ class HomePresenter @Inject constructor(private val ui: HomeUi,
                 .map { HomeUi.State.Change.UpdateLoadingMarketBulkDetails(Progress(inProgress = true)) }
                 .cast(HomeUi.State.Change::class.java)
                 .share()
-                .onErrorReturn { HomeUi.State.Change.Error("Failed to get apps") }
+                .onErrorReturn { HomeUi.State.Change.Error(RuntimeException(it)) }
 
         val loadApps = intentions.loadCachedItems()
 //                .map { playClient.getApps() }
                 .map { HomeUi.State.Change.ReadFromDatabaseRequested }
                 .cast(HomeUi.State.Change::class.java)
                 .share()
-                .onErrorReturn { HomeUi.State.Change.Error("Failed to get apps") }
+                .onErrorReturn { HomeUi.State.Change.Error(RuntimeException(it)) }
+
+        val clearDatabase = intentions.clearDatabase()
+                .flatMap { database.clear().toObservable<HomeUi.State.Change>() }
+                .onErrorReturn(handleUnknownError)
 
 //        val appsLoaded = playClient.databaseChanges
 //                .filter { it is PlayClient.DatabaseChange.Success }
@@ -49,7 +55,7 @@ class HomePresenter @Inject constructor(private val ui: HomeUi,
 
         disposables += startScan
                 .mergeWith(loadApps)
-//                .mergeWith(appsLoaded)
+                .mergeWith(clearDatabase)
                 .doOnNext { Timber.v(it.logString) }
                 .scan(ui.state, HomeUi.State::reduce)
                 .doOnNext { Timber.v(it.toString()) }
@@ -59,4 +65,6 @@ class HomePresenter @Inject constructor(private val ui: HomeUi,
     fun stop() {
         disposables.clear()
     }
+
+    private val handleUnknownError: (Throwable) -> HomeUi.State.Change = { t -> HomeUi.State.Change.Error(t) }
 }

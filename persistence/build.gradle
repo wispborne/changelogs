@@ -25,26 +25,32 @@ android {
 
     }
     buildTypes {
+        debug {
+        }
+        ci {
+        }
+        alpha {
+        }
+        beta {
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':utils')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':utils')
 
-    compile libraries.kotlin
-    compile libraries.requery
-    compile libraries.requeryAndroid
-    compile libraries.requeryKotlin
+    implementation libraries.kotlin
+    implementation libraries.requery
+    implementation libraries.requeryAndroid
+    implementation libraries.requeryKotlin
     kapt libraries.requeryProcessor
-    compile libraries.dagger
+    implementation libraries.dagger
     kapt libraries.daggerCompiler
-    compile libraries.gson
-    compile libraries.timber
+    implementation libraries.gson
+    implementation libraries.timber
 
 //    testCompile libraries.junit
 //    testCompile libraries.mockitoCore
@@ -53,7 +59,7 @@ dependencies {
 //    testCompile libraries.spekJunitPlatformEngine
 //    testCompile libraries.junitPlatformRunner
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

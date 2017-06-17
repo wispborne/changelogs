@@ -18,7 +18,7 @@ ext.versions = [
         kotlin             : "1.1.2-4",
         kotlinGradlePlugin : "1.1.2-2",
         supportLib         : "25.3.1",
-        gradle             : "3.0.0-alpha1",
+        androidGradlePlugin: "3.0.0-alpha4",
         constraintLayout   : "1.0.2",
         playServices       : "9.4.0",
         rxrelay            : "2.0.0",
@@ -47,7 +47,7 @@ ext.versions = [
 
 ext.gradlePlugins = [
         kotlin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinGradlePlugin",
-        gradle: "com.android.tools.build:gradle:$versions.gradle"
+        gradle: "com.android.tools.build:gradle:$versions.androidGradlePlugin"
 ]
 
 ext.libraries = [
@@ -68,7 +68,7 @@ ext.libraries = [
         picasso                  : "com.squareup.picasso:picasso:$versions.picasso",
         dagger                   : "com.google.dagger:dagger:$versions.dagger",
         daggerCompiler           : "com.google.dagger:dagger-compiler:$versions.dagger",
-        databinding              : "com.android.databinding:compiler:$versions.gradle",
+        databinding              : "com.android.databinding:compiler:$versions.androidGradlePlugin",
         timber                   : "com.jakewharton.timber:timber:$versions.timber",
         junit                    : "junit:junit:$versions.junit",
         protobuf                 : "com.google.protobuf:protobuf-java:$versions.protobuf",
