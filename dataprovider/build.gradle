@@ -40,15 +40,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':persistence')
-    implementation project(':playstoreapi')
+    api project(':playstoreapi')
     implementation project(':utils')
 
     implementation libraries.kotlin
     implementation libraries.kotlinCoroutines
     implementation libraries.rxrelay
-    implementation libraries.rxjava
+    api libraries.rxjava
     implementation libraries.dagger
     kapt libraries.daggerCompiler
+    implementation libraries.timber
+    implementation libraries.requery
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

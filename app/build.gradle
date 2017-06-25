@@ -129,7 +129,7 @@ android {
 }
 
 dependencies {
-//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':utils')
     implementation project(':dataprovider')
 
@@ -142,6 +142,7 @@ dependencies {
     implementation libraries.kotlinCoroutines
     implementation libraries.rxrelay
     implementation libraries.rxjava
+    implementation libraries.rxandroid
     implementation libraries.conductor
     implementation libraries.kotpref
     implementation libraries.picasso
@@ -159,15 +160,18 @@ dependencies {
         transitive = true
     }
 
-    distImplementation libraries.leakCanary
-    distImplementation libraries.leakCanaryNoOp
+    debugImplementation libraries.leakCanary
+    ciImplementation libraries.leakCanary
+    alphaImplementation libraries.leakCanaryNoOp
+    betaImplementation libraries.leakCanaryNoOp
+    releaseImplementation libraries.leakCanaryNoOp
 //    distCiImplementation libraries.leakCanary
 //    distAlphaImplementation libraries.leakCanaryNoOp
 //    distBetaImplementation libraries.leakCanaryNoOp
 //    distReleaseImplementation libraries.leakCanaryNoOp
 
-    testImplementation libraries.junit
     testImplementation libraries.leakCanaryNoOp
+    testImplementation libraries.junit
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

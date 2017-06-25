@@ -12,6 +12,7 @@ import com.jakewharton.rxrelay2.ReplayRelay
 import com.thunderclouddev.deeplink.logging.timberkt.KTimber
 import com.thunderclouddev.persistence.AppInfoDatabase
 import com.thunderclouddev.persistence.DbAppInfo
+import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +25,7 @@ import javax.inject.Singleton
 class Database @Inject constructor(private val database: AppInfoDatabase) {
     private val databaseChangesSubject = ReplayRelay.create<PlayClient.DatabaseChange.NewItems>(1)
 
-    val databaseChanges = databaseChangesSubject.share()
+    val databaseChanges: Observable<PlayClient.DatabaseChange.NewItems> = databaseChangesSubject.share()
 
     init {
         // Seed with initial value

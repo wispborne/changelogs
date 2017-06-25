@@ -8,7 +8,8 @@
 
 package com.thunderclouddev.dataprovider
 
-import com.thunderclouddev.persistence.*
+import com.thunderclouddev.persistence.DbAppInfo
+import com.thunderclouddev.persistence.DbAppInfoEntity
 import com.thunderclouddev.playstoreapi.model.ApiAppInfo
 
 internal fun AppInfo.toDatabaseModel() =
@@ -37,9 +38,12 @@ internal fun AppInfo.toDatabaseModel() =
             recentChangesHtml = this@toDatabaseModel.recentChangesHtml
             updateDate = this@toDatabaseModel.updateDate
             category = this@toDatabaseModel.category
-            links = this@toDatabaseModel.links
-            offer = this@toDatabaseModel.offer
-            permissions = this@toDatabaseModel.permissions
+            links = com.thunderclouddev.persistence.Links(this@toDatabaseModel.links ?: emptyMap())
+            offer = com.thunderclouddev.persistence.Offer(this@toDatabaseModel.offer?.micros,
+                    this@toDatabaseModel.offer?.currencyCode,
+                    this@toDatabaseModel.offer?.formattedAmount,
+                    this@toDatabaseModel.offer?.offerType)
+            permissions = this@toDatabaseModel.permissions?.map { com.thunderclouddev.persistence.Permission(it.name) }
             contentRating = this@toDatabaseModel.contentRating
         }
 
@@ -69,9 +73,12 @@ internal fun DbAppInfo.toModel() =
                 recentChangesHtml = this.recentChangesHtml,
                 updateDate = this.updateDate,
                 category = this.category,
-                links = this.links,
-                offer = this.offer,
-                permissions = this.permissions,
+                links = Links(this.links ?: emptyMap()),
+                offer = Offer(this.offer?.micros,
+                        this.offer?.currencyCode,
+                        this.offer?.formattedAmount,
+                        this.offer?.offerType),
+                permissions = this.permissions?.map { Permission(it.name) },
                 contentRating = this.contentRating)
 
 internal fun ApiAppInfo.toModel() =

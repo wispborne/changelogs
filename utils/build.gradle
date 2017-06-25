@@ -42,10 +42,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation libraries.kotlin
-    testImplementation libraries.junit
-    implementation libraries.rxjava
+    api libraries.rxjava
     implementation libraries.timber
 
+    testImplementation libraries.junit
     testImplementation libraries.mockitoCore
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

@@ -48,6 +48,7 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
     var scanForUpdatesRequest: PublishRelay<Unit> = PublishRelay.create()
     var loadCachedItems: PublishRelay<Unit> = PublishRelay.create()
     val clearDatabase: PublishRelay<Unit> = PublishRelay.create()
+    val refresh: PublishRelay<Unit> = PublishRelay.create()
 
     override fun render(state: HomeUi.State) {
         this.state = state
@@ -86,7 +87,14 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
                     .filter { !state.isLoading() }
 
     override fun clearDatabase(): Observable<Unit> = clearDatabase
-            .debounce(500, TimeUnit.SECONDS)
+            .debounce(500, TimeUnit.MILLISECONDS)
+
+    override fun refresh(): Observable<Unit> = refresh
+            .debounce(500, TimeUnit.MILLISECONDS)
+
+    override fun addTestApp(): Observable<Unit> = PublishRelay.create<Unit>()
+    override fun addTestApps(): Observable<Unit> = PublishRelay.create<Unit>()
+    override fun removeTestApp(): Observable<Unit> = PublishRelay.create<Unit>()
 
     @Inject lateinit var installedPackages: InstalledPackages
 
@@ -98,10 +106,10 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
         val view = inflater.inflate(R.layout.home_view, container)
         view.findViewById(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
         view.findViewById(R.id.clearButton).setOnClickListener { clearDatabase.accept(Unit) }
-        view.findViewById(R.id.addButton).setOnClickListener { playClient.addTestAppToDb() }
-        view.findViewById(R.id.addManyButton).setOnClickListener { playClient.addTestAppsToDb() }
-        view.findViewById(R.id.removeButton).setOnClickListener { playClient.removeAppFromDb() }
-        view.findViewById(R.id.refreshButton).setOnClickListener { database.refresh() }
+        view.findViewById(R.id.addButton).setOnClickListener { addTestApp() }
+        view.findViewById(R.id.addManyButton).setOnClickListener { addTestApps() }
+        view.findViewById(R.id.removeButton).setOnClickListener { removeTestApp() }
+        view.findViewById(R.id.refreshButton).setOnClickListener { refresh.accept(Unit) }
         val recyclerView = view.findViewById(R.id.home_recyclerview) as RecyclerView
         val appInfoList = AppInfoList(database, installedPackages)
         val linearLayoutManager = LinearLayoutManager(recyclerView.context)

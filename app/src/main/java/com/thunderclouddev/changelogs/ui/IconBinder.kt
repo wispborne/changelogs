@@ -13,7 +13,7 @@ import com.squareup.picasso.Callback
 import com.thunderclouddev.changelogs.BaseApp
 import com.thunderclouddev.changelogs.R
 import com.thunderclouddev.dataprovider.AppInfo
-import com.thunderclouddev.persistence.Links
+import com.thunderclouddev.dataprovider.Links
 
 /**
  * Set an icon to an [ImageView], first trying to get the icon locally, then online, and then using a placeholder.

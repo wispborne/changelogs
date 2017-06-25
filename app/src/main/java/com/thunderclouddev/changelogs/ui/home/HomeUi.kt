@@ -9,9 +9,9 @@
 package com.thunderclouddev.changelogs.ui.home
 
 import android.support.v7.util.DiffUtil
-import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.changelogs.ui.StateRenderer
 import com.thunderclouddev.dataprovider.AppInfosByPackage
+import com.thunderclouddev.dataprovider.Progress
 import io.reactivex.Observable
 
 /**
@@ -24,10 +24,12 @@ interface HomeUi : StateRenderer<HomeUi.State> {
 
     interface Intentions {
         fun scanForUpdatesRequest(): Observable<Unit>
-
         fun loadCachedItems(): Observable<Unit>
-
         fun clearDatabase(): Observable<Unit>
+        fun refresh(): Observable<Unit>
+        fun addTestApp(): Observable<Unit>
+        fun addTestApps(): Observable<Unit>
+        fun removeTestApp(): Observable<Unit>
     }
 
     interface Actions {

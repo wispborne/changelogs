@@ -41,7 +41,7 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
                         .and(DbAppInfoEntity::versionCode.eq(appInfo.versionCode))
                         .get().maybe().blockingGet()
 
-                val operation = if (existingItem == null) {
+                val operation: Single<DbAppInfo> = if (existingItem == null) {
                     Timber.v("Storing new app: ${appInfo.packageName}")
                     db.data.insert(appInfo)
                 } else {

@@ -43,7 +43,7 @@ dependencies {
     implementation project(':utils')
 
     implementation libraries.kotlin
-    implementation libraries.requery
+    api libraries.requery
     implementation libraries.requeryAndroid
     implementation libraries.requeryKotlin
     kapt libraries.requeryProcessor
@@ -51,6 +51,7 @@ dependencies {
     kapt libraries.daggerCompiler
     implementation libraries.gson
     implementation libraries.timber
+    api libraries.rxjava
 
 //    testCompile libraries.junit
 //    testCompile libraries.mockitoCore
