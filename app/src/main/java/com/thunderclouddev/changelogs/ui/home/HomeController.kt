@@ -24,6 +24,8 @@ import com.thunderclouddev.changelogs.InstalledPackages
 import com.thunderclouddev.changelogs.R
 import com.thunderclouddev.changelogs.ui.StateRenderer
 import com.thunderclouddev.dataprovider.AppInfosByPackage
+import com.thunderclouddev.dataprovider.Database
+import com.thunderclouddev.dataprovider.PlayClient
 import com.thunderclouddev.dataprovider.Progress
 import com.thunderclouddev.deeplink.logging.timberkt.KTimber
 import io.reactivex.Observable
@@ -44,6 +46,10 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
 
     lateinit var renderer: HomeRenderer
     lateinit var presenter: HomePresenter
+
+    @Inject lateinit var playClient: PlayClient
+    @Inject lateinit var database: Database
+    @Inject lateinit var installedPackages: InstalledPackages
 
     var scanForUpdatesRequest: PublishRelay<Unit> = PublishRelay.create()
     var loadCachedItems: PublishRelay<Unit> = PublishRelay.create()
@@ -96,21 +102,19 @@ class HomeController @Inject constructor() : Controller(), HomeUi, HomeUi.Action
     override fun addTestApps(): Observable<Unit> = PublishRelay.create<Unit>()
     override fun removeTestApp(): Observable<Unit> = PublishRelay.create<Unit>()
 
-    @Inject lateinit var installedPackages: InstalledPackages
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         BaseApp.appInjector.inject(this)
         renderer = HomeRenderer(this, AndroidSchedulers.mainThread(), Schedulers.computation())
-        presenter = HomePresenter(this, this, playClient, installedPackages)
+        presenter = HomePresenter(this, this, playClient, installedPackages, database)
 
         val view = inflater.inflate(R.layout.home_view, container)
-        view.findViewById(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
-        view.findViewById(R.id.clearButton).setOnClickListener { clearDatabase.accept(Unit) }
-        view.findViewById(R.id.addButton).setOnClickListener { addTestApp() }
-        view.findViewById(R.id.addManyButton).setOnClickListener { addTestApps() }
-        view.findViewById(R.id.removeButton).setOnClickListener { removeTestApp() }
-        view.findViewById(R.id.refreshButton).setOnClickListener { refresh.accept(Unit) }
-        val recyclerView = view.findViewById(R.id.home_recyclerview) as RecyclerView
+        view.findViewById<View>(R.id.the_button).setOnClickListener { scanForUpdatesRequest.accept(Unit) } //{ makeCall() }
+        view.findViewById<View>(R.id.clearButton).setOnClickListener { clearDatabase.accept(Unit) }
+        view.findViewById<View>(R.id.addButton).setOnClickListener { addTestApp() }
+        view.findViewById<View>(R.id.addManyButton).setOnClickListener { addTestApps() }
+        view.findViewById<View>(R.id.removeButton).setOnClickListener { removeTestApp() }
+        view.findViewById<View>(R.id.refreshButton).setOnClickListener { refresh.accept(Unit) }
+        val recyclerView = view.findViewById<RecyclerView>(R.id.home_recyclerview)
         val appInfoList = AppInfoList(database, installedPackages)
         val linearLayoutManager = LinearLayoutManager(recyclerView.context)
         recyclerView.layoutManager = linearLayoutManager

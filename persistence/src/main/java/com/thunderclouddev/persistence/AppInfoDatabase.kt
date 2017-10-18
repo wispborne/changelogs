@@ -50,7 +50,7 @@ class AppInfoDatabase internal constructor(private val db: RequeryDatabase<Persi
                     db.data.update(existingItem)
                 }
 
-                operation.subscribe { success, error ->
+                operation.subscribe { success: DbAppInfo?, error: Throwable? ->
                     if (success != null) s.onComplete() else s.onError(error)
                 }
             }

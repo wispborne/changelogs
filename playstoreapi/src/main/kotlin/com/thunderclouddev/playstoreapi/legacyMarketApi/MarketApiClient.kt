@@ -104,7 +104,7 @@ sealed class MarketRequest<T> : com.thunderclouddev.playstoreapi.Request<MarketR
                             "version=${MarketApiConstantsInternal.PROTOCOL_VERSION}&request=$encodedRequestBody".toByteArray()))
                     .headers(defaultHeaders)
                     .build())
-                    .doOnSubscribe { Timber.v("FdfeBulk fetching ${packageNames.joinToString()}") }
+                    .doOnSubscribe { Timber.v("Market Request Bulk fetching ${packageNames.joinToString()}") }
                     .map { decompressGzippedBytes(it.body().bytes()) }
                     .map {
                         Market.Response.parseFrom(it)

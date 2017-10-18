@@ -98,8 +98,29 @@ internal abstract class ApiClientWrapper<out C : ApiClient<R>, R : Request<R, *>
                     }
                 })
                         .toSingle { Any() }
-                        .flatMap { apiClient?.rxecute(request) }
+                        .flatMap<T> { apiClient?.rxecute(request) as Single<T> }
                         .map { it as T }
+//-----------------------------------------------
+//                Single.create<T> { subscriber ->
+//                    val shouldRequestAuth = pendingRequests.isEmpty()
+//
+//                    pendingRequests += object : RetryableRequest {
+//                        override fun retry() {
+//                            apiClient?.rxecute(request)
+//                                    ?.subscribeOn(Schedulers.newThread())
+//                                    ?.observeOn(AndroidSchedulers.mainThread())
+//                                    ?.subscribe(
+//                                            { result -> subscriber.onSuccess(result as T) },
+//                                            { error -> subscriber.onError(error) })
+//                        }
+//                    }
+//
+//                    if (shouldRequestAuth) {
+//                        Timber.v("Requesting authentication from user to create auth token.")
+//                        authorizationRequiredDelegate.onAuthorizationRequired()
+//                    }
+//                }
+//-----------------------------------------------
             } else {
                 // And if we have neither a client nor an auth token, then queue the call and signal that auth is required
                 Single.create<T> { subscriber ->

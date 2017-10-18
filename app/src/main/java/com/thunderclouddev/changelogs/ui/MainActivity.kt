@@ -16,9 +16,11 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.thunderclouddev.changelogs.BaseApp
 import com.thunderclouddev.changelogs.R
 import com.thunderclouddev.changelogs.ui.home.HomeController
 import com.thunderclouddev.deeplink.ui.ActionBarProvider
+import javax.inject.Inject
 
 /**
  * @author David Whitman on 28 Mar, 2017.
@@ -27,10 +29,13 @@ class MainActivity : AppCompatActivity(), ActionBarProvider {
     override val actionBar: ActionBar
         get() = supportActionBar!!
 
+    @Inject lateinit var homeController: HomeController
+
     private var router: Router? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BaseApp.appInjector.inject(this)
 
         setContentView(R.layout.main_activity)
         setSupportActionBar(findViewById(R.id.toolbar) as Toolbar)
@@ -38,7 +43,7 @@ class MainActivity : AppCompatActivity(), ActionBarProvider {
         router = Conductor.attachRouter(this, findViewById(R.id.controller_container) as ViewGroup, savedInstanceState)
         if (!router!!.hasRootController()) {
 //            if (!PlayApiClientWrapper(this).hasCachedAuthToken) {
-            router!!.setRoot(RouterTransaction.with(HomeController()))
+            router!!.setRoot(RouterTransaction.with(homeController))
 //            }
         }
     }

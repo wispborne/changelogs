@@ -40,6 +40,7 @@ android {
         versionName versions.name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        missingDimensionStrategy 'fossness', 'dist'
     }
     signingConfigs {
         // Debug keystore keeps signature consistent across CI builds
@@ -122,8 +123,6 @@ android {
         distReleaseCompile {}
     }
 
-    flavorSelection 'fossness', 'dist'
-
     dataBinding.enabled = true
     kotlin { experimental { coroutines 'enable' } }
 }
@@ -181,6 +180,7 @@ dependencies {
 repositories {
     mavenCentral()
     maven { url "http://maven.fabric.io/public" }
+    google()
 }
 
 
